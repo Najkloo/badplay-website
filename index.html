@@ -7,22 +7,22 @@
   <title>BadPlay — Serwer Minecraft Earth SMP w Polsce</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <meta name="description" content="BadPlay to survivalowy serwer Minecraft Earth SMP hostowany w Polsce — cały świat w skali 1:1000, systemy narodów i żywa mapa online.">
 
   <meta property="og:title" content="BadPlay — Minecraft Earth SMP">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
-  <meta property="og:image:alt" content="Mapa serwera BadPlay w stylu topograficznym">
+  <meta property="og:url" content="https://badplay.pl/">
+  <meta property="og:image" content="https://badplay.pl/assets/badplay-logo.webp">
+  <meta property="og:image:alt" content="BADPLAY — Minecraft Earth SMP">
 
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.png">
 
   <link rel="manifest" href="site.webmanifest">
-  <meta name="theme-color" content="#10161a">
+  <meta name="theme-color" content="#09090b">
 
   <!-- inline SVG sprite: icons reused across the page -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -76,28 +76,26 @@
 
   <header class="site-header">
     <div class="container">
-      <a href="#top" class="wordmark">
-        <svg class="compass-mark"><use href="#icon-compass"/></svg>
-        BadPlay <small>Earth SMP</small>
+      <a href="#top" class="wordmark" aria-label="BADPLAY — strona główna">
+        <img src="assets/logo.png" alt="BADPLAY" class="brand-logo">
+        <span>BADPLAY</span>
       </a>
 
       <nav class="nav-links" aria-label="Główna nawigacja">
         <a href="#serwer">Serwer</a>
         <a href="#funkcje">Funkcje</a>
-        <a href="#dolacz">Dołącz</a>
-        <a href="#lokalizacja">Lokalizacja</a>
-        <a href="#spolecznosc">Społeczność</a>
+        <a href="#dolacz">Jak dołączyć</a>
+        <a href="#lokalizacja">Infrastruktura</a>
+        <a href="https://mapa.badplay.pl" target="_blank" rel="noopener">Mapa</a>
       </nav>
 
       <div class="header-actions">
-        <a class="btn btn-ghost" href="#spolecznosc">
-          <svg><use href="#icon-discord"/></svg>
+        <a class="btn btn-shop" href="https://sklep.badplay.pl">
+          SKLEP
+        </a>
+        <a class="btn btn-discord" href="https://dc.badplay.pl" target="_blank" rel="noopener">
           Discord
         </a>
-        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Przełącz motyw">
-          <svg class="icon-sun"><use href="#icon-sun"/></svg>
-          <svg class="icon-moon"><use href="#icon-moon"/></svg>
-        </button>
         <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -112,15 +110,19 @@
 
       <div class="container">
         <div class="hero-top">
-          <span class="eyebrow">Minecraft Earth SMP · Serwer z Polski</span>
-          <svg class="compass-rose"><use href="#icon-compass"/></svg>
+          <span class="eyebrow">MINECRAFT EARTH SMP · POLSKA</span>
+          <span class="hero-code">BADPLAY / 001</span>
         </div>
 
-        <h1 class="hero-title">Bad<em>Play</em></h1>
+        <div class="hero-brand">
+          <img src="assets/badplay-logo.webp" alt="BADPLAY" class="hero-logo">
+        </div>
+
+        <h1 class="hero-title">Zbuduj swój świat.</h1>
 
         <div class="hero-copy">
-          <p>Cała Ziemia, blok po bloku, w skali 1:1000 — buduj, handluj i zakładaj własne państwo na prawdziwej mapie świata.</p>
-          <p class="en">Real-Earth survival SMP at 1:1000 scale — servers hosted in Poland, open to players from anywhere in Europe.</p>
+          <p>Cała Ziemia, blok po bloku. Buduj miasta, twórz państwa i rozwijaj własną historię na prawdziwej mapie świata.</p>
+          <p class="en">Earth SMP · mapa świata 1:1000 · Java Edition · infrastruktura w Polsce</p>
         </div>
 
         <div class="hero-actions">
@@ -128,18 +130,18 @@
             <svg><use href="#icon-copy"/></svg>
             Skopiuj adres serwera
           </button>
-          <a class="btn btn-ghost" href="#spolecznosc">
+          <a class="btn btn-ghost" href="https://dc.badplay.pl" target="_blank" rel="noopener">
             <svg><use href="#icon-discord"/></svg>
             Dołącz na Discord
           </a>
         </div>
 
         <div class="status-strip tabular">
-          <span><span class="dot"></span>Online</span>
-          <span>Wersja 1.21.4</span>
-          <span>47 / 150 graczy</span>
-          <span>Region EU-Central · Warszawa</span>
-          <span>52°14&prime;N 21°00&prime;E</span>
+          <span><span class="dot"></span>JAVA EDITION</span>
+          <span>1.21.4</span>
+          <span>EARTH · 1 : 1000</span>
+          <span>EU-CENTRAL · POLSKA</span>
+          <span>PLAY.BADPLAY.PL</span>
         </div>
       </div>
     </section>
@@ -312,7 +314,7 @@
             <p>Discord to serce serwera — stamtąd rozdajemy rangi, ogłaszamy eventy i pomagamy nowym graczom postawić pierwszy dom.</p>
           </div>
           <div class="community-actions">
-            <a class="btn btn-primary" href="#">
+            <a class="btn btn-primary" href="https://dc.badplay.pl" target="_blank" rel="noopener">
               <svg><use href="#icon-discord"/></svg>
               Dołącz na Discord
             </a>
@@ -329,17 +331,25 @@
 
   <footer class="site-footer">
     <div class="container">
-      <div class="flag-rule" aria-hidden="true"></div>
-      <div class="footer-row">
-        <div class="scale-bar" aria-hidden="true">
-          Skala mapy 1:1000
-          <span class="ticks"><span></span><span></span><span></span><span></span><span></span><span></span></span>
+      <div class="footer-main">
+        <div class="footer-brand">
+          <img src="assets/logo.png" alt="BADPLAY">
+          <div>
+            <strong>BADPLAY</strong>
+            <span>Minecraft Earth SMP</span>
+          </div>
         </div>
-        <div class="footer-meta tabular">
-          <span>© 2026 BadPlay SMP</span>
-          <span>52°14&prime;N 21°00&prime;E</span>
-          <span>Serwer hostowany w Polsce</span>
+        <div class="footer-links">
+          <a href="https://sklep.badplay.pl">Sklep</a>
+          <a href="https://sklep.badplay.pl/regulamin.html">Regulamin</a>
+          <a href="https://mapa.badplay.pl" target="_blank" rel="noopener">Mapa</a>
+          <a href="https://dc.badplay.pl" target="_blank" rel="noopener">Discord</a>
         </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 BADPLAY. Wszelkie prawa zastrzeżone.</span>
+        <span>Stworzone przez Najklo.</span>
+        <span>Serwer nie jest powiązany z Mojang ani Microsoft.</span>
       </div>
     </div>
   </footer>
