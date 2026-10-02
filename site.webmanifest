@@ -1,12 +1,1 @@
-{
-  "short_name": "BadPlay",
-  "name": "BadPlay — Minecraft Earth SMP",
-  "icons": [{
-    "src": "icon.png",
-    "type": "image/png",
-    "sizes": "192x192"
-  }],
-  "start_url": "/?utm_source=homescreen",
-  "background_color": "#08080a",
-  "theme_color": "#08080a"
-}
+{"name":"BADPLAY","short_name":"BADPLAY","start_url":"/","display":"standalone","background_color":"#070707","theme_color":"#070707","icons":[{"src":"assets/logo.png","sizes":"64x64","type":"image/png"}]}

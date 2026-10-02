@@ -1,22 +1,13 @@
-# BADPLAY — oficjalna strona
+# BADPLAY — Static GitHub Pages
 
-Profesjonalna strona BADPLAY Minecraft Earth SMP, przygotowana pod GitHub Pages.
+Ta wersja jest całkowicie statyczna. Nie wymaga Node.js, npm, Webpacka ani GitHub Actions.
 
-## Uruchomienie na GitHub Pages
+## Publikacja
+1. Wgraj zawartość tego folderu do głównego katalogu repozytorium.
+2. GitHub → Settings → Pages.
+3. Build and deployment → Source: **Deploy from a branch**.
+4. Branch: **main**, folder: **/(root)**.
+5. Zapisz.
+6. Custom domain: **badplay.pl**.
 
-1. Wrzuć całą zawartość repozytorium na branch `main`.
-2. W GitHub: **Settings → Pages**.
-3. Jako źródło wybierz **GitHub Actions**.
-4. Workflow `.github/workflows/deploy.yml` zbuduje stronę i opublikuje ją automatycznie.
-5. Plik `CNAME` ustawia domenę `badplay.pl`.
-
-## Linki
-
-- Serwer: `play.badplay.pl`
-- Sklep: `https://sklep.badplay.pl`
-- Mapa: `https://mapa.badplay.pl`
-- Discord: `https://dc.badplay.pl`
-
-## Projekt
-
-Strona używa czystego HTML/CSS/JS, Webpacka i GitHub Actions. Grafiki BADPLAY znajdują się lokalnie w `assets/`, dzięki czemu nie są zależne od zewnętrznych hostów.
+Plik `CNAME` jest już dodany.

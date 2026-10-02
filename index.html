@@ -1,363 +1,74 @@
 <!doctype html>
-<html class="no-js" lang="pl">
-
+<html lang="pl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BadPlay — Serwer Minecraft Earth SMP w Polsce</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <meta name="description" content="BadPlay to survivalowy serwer Minecraft Earth SMP hostowany w Polsce — cały świat w skali 1:1000, systemy narodów i żywa mapa online.">
-
-  <meta property="og:title" content="BadPlay — Minecraft Earth SMP">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://badplay.pl/">
-  <meta property="og:image" content="https://badplay.pl/assets/badplay-logo.webp">
-  <meta property="og:image:alt" content="BADPLAY — Minecraft Earth SMP">
-
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icon.png">
-
-  <link rel="manifest" href="site.webmanifest">
-  <meta name="theme-color" content="#09090b">
-
-  <!-- inline SVG sprite: icons reused across the page -->
-  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-    <symbol id="icon-compass" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4">
-      <circle cx="24" cy="24" r="21"/>
-      <circle cx="24" cy="24" r="1.6" fill="currentColor" stroke="none"/>
-      <path d="M24 5v6M24 37v6M5 24h6M37 24h6" stroke-width="1.2"/>
-      <path d="M24 12 L28 24 L24 36 L20 24 Z" fill="currentColor" stroke="none" opacity="0.9"/>
-    </symbol>
-    <symbol id="icon-discord" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M8 12c0 1-.7 2-2 2s-2-1.2-2-2 .8-2 2-2 2 1 2 2Z"/>
-      <path d="M18 12c0 1-.7 2-2 2s-2-1.2-2-2 .8-2 2-2 2 1 2 2Z"/>
-      <path d="M6.2 8.4C8.5 6.9 10.8 6.5 12 6.5s3.5.4 5.8 1.9c1.5 2.6 2 5.7 2 9.1-1.6 1.2-3.4 1.9-4.3 2.1l-.9-1.6"/>
-      <path d="M17.8 8.4c1.5 2.6 2 5.7 2 9.1-1.6 1.2-3.4 1.9-4.3 2.1M6.2 8.4C4.7 11 4.2 14.1 4.2 17.5c1.6 1.2 3.4 1.9 4.3 2.1l.9-1.6"/>
-    </symbol>
-    <symbol id="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="8" y="8" width="12" height="12" rx="1.5"/>
-      <path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4H5.5A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/>
-    </symbol>
-    <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
-      <circle cx="12" cy="12" r="4.2"/>
-      <path d="M12 2.5v2.4M12 19.1v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7"/>
-    </symbol>
-    <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M20 14.2A8.3 8.3 0 1 1 9.8 4a6.6 6.6 0 0 0 10.2 10.2Z"/>
-    </symbol>
-    <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <circle cx="12" cy="12" r="9"/>
-      <path d="M3 12h18M12 3c2.8 2.5 4.2 5.6 4.2 9s-1.4 6.5-4.2 9c-2.8-2.5-4.2-5.6-4.2-9S9.2 5.5 12 3Z"/>
-    </symbol>
-    <symbol id="icon-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
-      <path d="M6 21V4"/>
-      <path d="M6 4h13l-3 4 3 4H6"/>
-    </symbol>
-    <symbol id="icon-coin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <circle cx="12" cy="12" r="8.5"/>
-      <path d="M9 15.5c.6.7 1.7 1.2 3 1.2 1.9 0 3-1 3-2.2 0-3-6-1.3-6-4.3 0-1.2 1.2-2.2 3-2.2 1.3 0 2.4.5 3 1.2M12 6.5v11"/>
-    </symbol>
-    <symbol id="icon-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
-      <path d="M9 4 4 6v14l5-2 6 2 5-2V4l-5 2-6-2Z"/>
-      <path d="M9 4v14M15 6v14"/>
-    </symbol>
-    <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
-      <path d="M12 3.5 5 6v6c0 4.4 3 7.6 7 8.5 4-.9 7-4.1 7-8.5V6l-7-2.5Z"/>
-    </symbol>
-  </svg>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BADPLAY — Minecraft Earth SMP</title>
+<meta name="description" content="BADPLAY — polski serwer Minecraft Earth SMP. Graj na mapie świata, buduj własne państwo i dołącz do społeczności.">
+<meta name="theme-color" content="#090909">
+<link rel="icon" href="assets/logo.png">
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-  <header class="site-header">
-    <div class="container">
-      <a href="#top" class="wordmark" aria-label="BADPLAY — strona główna">
-        <img src="assets/logo.png" alt="BADPLAY" class="brand-logo">
-        <span>BADPLAY</span>
-      </a>
-
-      <nav class="nav-links" aria-label="Główna nawigacja">
-        <a href="#serwer">Serwer</a>
-        <a href="#funkcje">Funkcje</a>
-        <a href="#dolacz">Jak dołączyć</a>
-        <a href="#lokalizacja">Infrastruktura</a>
-        <a href="https://mapa.badplay.pl" target="_blank" rel="noopener">Mapa</a>
-      </nav>
-
-      <div class="header-actions">
-        <a class="btn btn-shop" href="https://sklep.badplay.pl">
-          SKLEP
-        </a>
-        <a class="btn btn-discord" href="https://dc.badplay.pl" target="_blank" rel="noopener">
-          Discord
-        </a>
-        <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
+<header class="header">
+  <div class="wrap nav">
+    <a class="brand" href="#start" aria-label="BADPLAY strona główna">
+      <img src="assets/logo.png" alt="BADPLAY">
+      <span>BAD<span>PLAY</span></span>
+    </a>
+    <nav>
+      <a href="#serwer">SERWER</a>
+      <a href="#funkcje">FUNKCJE</a>
+      <a href="#dolacz">DOŁĄCZ</a>
+      <a href="#spolecznosc">SPOŁECZNOŚĆ</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-store" href="https://sklep.badplay.pl">SKLEP</a>
+      <a class="btn btn-outline" href="https://dc.badplay.pl">DISCORD</a>
+      <button class="menu" id="menu" aria-label="Otwórz menu"><i></i><i></i><i></i></button>
     </div>
-  </header>
-
-  <main id="top">
-
-    <section class="hero">
-      <canvas id="contour-canvas" aria-hidden="true"></canvas>
-
-      <div class="container">
-        <div class="hero-top">
-          <span class="eyebrow">MINECRAFT EARTH SMP · POLSKA</span>
-          <span class="hero-code">BADPLAY / 001</span>
-        </div>
-
-        <div class="hero-brand">
-          <img src="assets/badplay-logo.webp" alt="BADPLAY" class="hero-logo">
-        </div>
-
-        <h1 class="hero-title">Zbuduj swój świat.</h1>
-
-        <div class="hero-copy">
-          <p>Cała Ziemia, blok po bloku. Buduj miasta, twórz państwa i rozwijaj własną historię na prawdziwej mapie świata.</p>
-          <p class="en">Earth SMP · mapa świata 1:1000 · Java Edition · infrastruktura w Polsce</p>
-        </div>
-
-        <div class="hero-actions">
-          <button class="btn btn-primary" id="copy-ip-hero" data-copy="play.badplay.pl">
-            <svg><use href="#icon-copy"/></svg>
-            Skopiuj adres serwera
-          </button>
-          <a class="btn btn-ghost" href="https://dc.badplay.pl" target="_blank" rel="noopener">
-            <svg><use href="#icon-discord"/></svg>
-            Dołącz na Discord
-          </a>
-        </div>
-
-        <div class="status-strip tabular">
-          <span><span class="dot"></span>JAVA EDITION</span>
-          <span>1.21.4</span>
-          <span>EARTH · 1 : 1000</span>
-          <span>EU-CENTRAL · POLSKA</span>
-          <span>PLAY.BADPLAY.PL</span>
-        </div>
+  </div>
+</header>
+<main id="start">
+<section class="hero">
+  <div class="grid-bg"></div><div class="glow glow-a"></div><div class="glow glow-b"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="kicker"><span></span> MINECRAFT EARTH SMP · POLSKA</div>
+      <h1>Świat jest<br><em>Twój.</em></h1>
+      <p class="lead">BADPLAY to survival na prawdziwej mapie Ziemi. Buduj miasta, twórz państwa, handluj i pisz własną historię razem z innymi graczami.</p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary copy" data-copy="play.badplay.pl">KOPIUJ IP <b>play.badplay.pl</b></button>
+        <a class="btn btn-dark" href="https://sklep.badplay.pl">OTWÓRZ SKLEP <span>↗</span></a>
       </div>
-    </section>
-
-    <section id="serwer">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Płyta serwera</span>
-          <h2>Wszystko, czego potrzebujesz, żeby dołączyć</h2>
-          <p>Otwarty świat bez whitelisty. Podłącz się w kilka minut i wybierz miejsce na mapie, w którym zaczniesz swoją historię.</p>
-        </div>
-
-        <div class="plate reveal">
-          <div class="plate-grid">
-            <div class="plate-item">
-              <div class="plate-label">Adres IP</div>
-              <div class="plate-value">
-                play.badplay.pl
-                <button class="copy-btn" data-copy="play.badplay.pl">
-                  <svg><use href="#icon-copy"/></svg>
-                  Kopiuj
-                </button>
-              </div>
-            </div>
-            <div class="plate-item">
-              <div class="plate-label">Wersja</div>
-              <div class="plate-value tabular">Java 1.21.4</div>
-            </div>
-            <div class="plate-item">
-              <div class="plate-label">Skala mapy</div>
-              <div class="plate-value tabular">1 : 1000</div>
-            </div>
-            <div class="plate-item">
-              <div class="plate-label">Punkt startowy</div>
-              <div class="plate-value tabular">52.2297° N, 21.0122° E</div>
-            </div>
-            <div class="plate-item">
-              <div class="plate-label">Whitelist</div>
-              <div class="plate-value">Brak — wejdź od razu</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="funkcje">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Legenda mapy</span>
-          <h2>Zbudowane na prawdziwej geografii</h2>
-          <p>Każdy kontynent, góra i rzeka odwzorowane w skali. Reszta świata zależy od graczy.</p>
-        </div>
-
-        <div class="legend-grid reveal">
-          <div class="legend-item">
-            <span class="legend-glyph"><svg><use href="#icon-globe"/></svg></span>
-            <div>
-              <h3>Prawdziwa geografia</h3>
-              <p>Cała Ziemia w skali 1:1000 — kontynenty, łańcuchy górskie i sieć rzeczna wygenerowane z realnych danych terenu.</p>
-            </div>
-          </div>
-          <div class="legend-item">
-            <span class="legend-glyph"><svg><use href="#icon-flag"/></svg></span>
-            <div>
-              <h3>Systemy narodów</h3>
-              <p>Zakładaj państwa, wyznaczaj granice i zawieraj sojusze z innymi graczami na własnym terytorium.</p>
-            </div>
-          </div>
-          <div class="legend-item">
-            <span class="legend-glyph"><svg><use href="#icon-coin"/></svg></span>
-            <div>
-              <h3>Ekonomia gracza</h3>
-              <p>Waluta serwerowa, sklepy graczy i handel między miastami — gospodarka napędzana wyłącznie przez społeczność.</p>
-            </div>
-          </div>
-          <div class="legend-item">
-            <span class="legend-glyph"><svg><use href="#icon-map"/></svg></span>
-            <div>
-              <h3>Żywa mapa</h3>
-              <p>Śledź budowy, granice państw i graczy online w czasie rzeczywistym na interaktywnej mapie Dynmap.</p>
-            </div>
-          </div>
-          <div class="legend-item">
-            <span class="legend-glyph"><svg><use href="#icon-shield"/></svg></span>
-            <div>
-              <h3>Ochrona terenu</h3>
-              <p>System działek i chunk-claimów chroni Twoje budowle przed griefingiem od pierwszego dnia.</p>
-            </div>
-          </div>
-          <div class="legend-item">
-            <span class="legend-glyph"><svg><use href="#icon-compass"/></svg></span>
-            <div>
-              <h3>Wydarzenia sezonowe</h3>
-              <p>Eventy powiązane z porami roku i świętami, od budowlanych konkursów po wspólne wyprawy.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="dolacz" class="join-section">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Jak dołączyć</span>
-          <h2>Cztery kroki do pierwszego bloku</h2>
-        </div>
-
-        <div class="join-steps reveal">
-          <div class="join-step">
-            <h3>Pobierz Minecraft</h3>
-            <p>Wersja Java Edition <code>1.21.4</code>, wydanie oryginalne (bez modów).</p>
-          </div>
-          <div class="join-step">
-            <h3>Dodaj serwer</h3>
-            <p>Wpisz adres <code>play.badplay.pl</code> na liście serwerów wielu graczy.</p>
-          </div>
-          <div class="join-step">
-            <h3>Wybierz miejsce</h3>
-            <p>Teleportuj się na współrzędne dowolnego miasta na świecie i postaw pierwszy blok.</p>
-          </div>
-          <div class="join-step">
-            <h3>Dołącz na Discord</h3>
-            <p>Odbierz rangę, poznaj zasady i znajdź sąsiadów do współpracy.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="lokalizacja">
-      <div class="container location-layout">
-        <div class="location-copy reveal">
-          <span class="eyebrow">Serwery stoją w Polsce</span>
-          <h2 style="margin-top:0.7rem;">Zbudowany blisko domu</h2>
-          <p>Infrastruktura BadPlay działa na serwerach w <strong>Warszawie</strong>, więc gracze z Polski i regionu Europy Środkowej dostają najniższe możliwe opóźnienia. Społeczność jest dwujęzyczna — rozmawiamy po polsku i angielsku na równi.</p>
-          <p>Czas serwerowy to <strong>CET/CEST</strong>, a większość wydarzeń i eventów budowlanych planowana jest z myślą o wieczorach czasu środkowoeuropejskiego.</p>
-        </div>
-
-        <table class="ping-table reveal">
-          <caption>Przybliżone opóźnienie</caption>
-          <thead>
-            <tr><th>Region</th><th>Ping</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Polska</td>
-              <td class="ms tabular"><span class="ping-bar" style="width:14px;"></span>~12 ms</td>
-            </tr>
-            <tr>
-              <td>Europa Środkowa</td>
-              <td class="ms tabular"><span class="ping-bar" style="width:22px;"></span>~20 ms</td>
-            </tr>
-            <tr>
-              <td>Europa Zachodnia</td>
-              <td class="ms tabular"><span class="ping-bar" style="width:34px;"></span>~35 ms</td>
-            </tr>
-            <tr>
-              <td>Europa Płn./Płd.</td>
-              <td class="ms tabular"><span class="ping-bar" style="width:42px;"></span>~45 ms</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section id="spolecznosc">
-      <div class="container">
-        <div class="community-panel reveal">
-          <div>
-            <h2>Dołącz do ekipy BadPlay</h2>
-            <p>Discord to serce serwera — stamtąd rozdajemy rangi, ogłaszamy eventy i pomagamy nowym graczom postawić pierwszy dom.</p>
-          </div>
-          <div class="community-actions">
-            <a class="btn btn-primary" href="https://dc.badplay.pl" target="_blank" rel="noopener">
-              <svg><use href="#icon-discord"/></svg>
-              Dołącz na Discord
-            </a>
-            <button class="btn btn-ghost" id="copy-ip-footer" data-copy="play.badplay.pl">
-              <svg><use href="#icon-copy"/></svg>
-              Skopiuj IP
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-main">
-        <div class="footer-brand">
-          <img src="assets/logo.png" alt="BADPLAY">
-          <div>
-            <strong>BADPLAY</strong>
-            <span>Minecraft Earth SMP</span>
-          </div>
-        </div>
-        <div class="footer-links">
-          <a href="https://sklep.badplay.pl">Sklep</a>
-          <a href="https://sklep.badplay.pl/regulamin.html">Regulamin</a>
-          <a href="https://mapa.badplay.pl" target="_blank" rel="noopener">Mapa</a>
-          <a href="https://dc.badplay.pl" target="_blank" rel="noopener">Discord</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© 2026 BADPLAY. Wszelkie prawa zastrzeżone.</span>
-        <span>Stworzone przez Najklo.</span>
-        <span>Serwer nie jest powiązany z Mojang ani Microsoft.</span>
-      </div>
+      <div class="quick"><span class="online"><i></i> SERWER ONLINE</span><span>JAVA 1.21.4+</span><span>BEZ WHITELISTY</span></div>
     </div>
-  </footer>
-
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <script src="js/app.js"></script>
-
-</body>
-
-</html>
+    <div class="hero-art">
+      <div class="art-frame"><img src="assets/badplay-logo.png" alt="Logo BADPLAY"><div class="art-red"></div></div>
+      <div class="floating-card"><strong>play.badplay.pl</strong><span>ADRES SERWERA</span></div>
+    </div>
+  </div>
+</section>
+<section class="stats"><div class="wrap stats-grid">
+  <div><b>1 : 1000</b><span>SKALA ŚWIATA</span></div><div><b>24/7</b><span>DOSTĘPNOŚĆ</span></div><div><b>1.21.4+</b><span>WERSJA JAVA</span></div><div><b>EU</b><span>LOKALIZACJA</span></div>
+</div></section>
+<section id="serwer" class="section"><div class="wrap">
+  <div class="section-title"><div><span class="kicker"><span></span> BADPLAY</span><h2>Serwer zbudowany<br><em>dla graczy.</em></h2></div><p>Wszystko, czego potrzebujesz, żeby wejść do gry bez zbędnego czekania.</p></div>
+  <div class="info-panel"><div class="info-main"><span class="label">ADRES SERWERA</span><strong>play.badplay.pl</strong><button class="copy small" data-copy="play.badplay.pl">KOPIUJ</button></div><div><span class="label">WERSJA</span><strong>Java 1.21.4+</strong></div><div><span class="label">WHITELISTA</span><strong>Brak</strong></div><div><span class="label">TRYB</span><strong>Earth SMP</strong></div></div>
+</div></section>
+<section id="funkcje" class="section features"><div class="wrap">
+  <div class="section-title"><div><span class="kicker"><span></span> CO CZEKA NA CIEBIE</span><h2>Nie tylko kolejny<br><em>serwer survival.</em></h2></div><p>Świat BADPLAY został zaprojektowany tak, aby rozgrywka miała sens także poza samym budowaniem.</p></div>
+  <div class="cards">
+    <article><span class="num">01</span><div class="icon">◈</div><h3>Prawdziwa Ziemia</h3><p>Graj na mapie opartej o rzeczywistą geografię. Znajdź swoje miejsce i rozwijaj je od zera.</p></article>
+    <article><span class="num">02</span><div class="icon">⌂</div><h3>Państwa i miasta</h3><p>Twórz własne państwa, rozwijaj miasta, ustalaj granice i buduj swoją pozycję na serwerze.</p></article>
+    <article><span class="num">03</span><div class="icon">₿</div><h3>Gospodarka</h3><p>Handluj, rozwijaj sklepy i korzystaj z ekonomii tworzonej przez społeczność graczy.</p></article>
+    <article><span class="num">04</span><div class="icon">⌁</div><h3>Żywa mapa</h3><p>Sprawdzaj świat serwera online i orientuj się w położeniu miast, państw oraz najważniejszych miejsc.</p></article>
+  </div>
+</div></section>
+<section id="dolacz" class="join"><div class="wrap join-box"><div><span class="kicker"><span></span> GOTOWY?</span><h2>Zacznij swoją<br><em>historię.</em></h2><p>Wejdź na serwer, znajdź miejsce na mapie i zacznij budować. Reszta zależy od Ciebie.</p></div><div class="join-actions"><button class="btn btn-primary copy" data-copy="play.badplay.pl">KOPIUJ play.badplay.pl</button><a class="btn btn-outline light" href="https://dc.badplay.pl">DOŁĄCZ NA DISCORD ↗</a></div></div></section>
+<section id="spolecznosc" class="section community"><div class="wrap community-grid"><div><span class="kicker"><span></span> SPOŁECZNOŚĆ</span><h2>Nie graj<br><em>sam.</em></h2><p>Discord BADPLAY to miejsce na ogłoszenia, pomoc, rozmowy z graczami i informacje o serwerze.</p><a class="btn btn-primary" href="https://dc.badplay.pl">OTWÓRZ DISCORD ↗</a></div><div class="discord-card"><div class="discord-mark">◉</div><div><strong>BADPLAY</strong><span>discord.badplay.pl</span></div><b>↗</b></div></div></section>
+</main>
+<footer><div class="wrap footer-top"><a class="brand" href="#start"><img src="assets/logo.png" alt="BADPLAY"><span>BAD<span>PLAY</span></span></a><div class="footer-links"><a href="https://badplay.pl">STRONA GŁÓWNA</a><a href="https://sklep.badplay.pl">SKLEP</a><a href="https://sklep.badplay.pl/regulamin.html">REGULAMIN</a><a href="https://mapa.badplay.pl">MAPA</a><a href="https://dc.badplay.pl">DISCORD</a></div></div><div class="wrap footer-bottom"><span>© 2026 BADPLAY. WSZELKIE PRAWA ZASTRZEŻONE.</span><span>STWORZONE PRZEZ NAJKLO.</span><span>STRONA ZASILANA PRZEZ VISHOP.PL</span></div></footer>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body></html>
