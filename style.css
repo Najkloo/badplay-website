@@ -68,3 +68,26 @@ footer{position:relative;z-index:2;border-top:1px solid #222;background:#050505}
 .staff-v5 .skin3d-wrap { display:flex; align-items:center; justify-content:center; }
 .staff-v5 .skin3d-wrap canvas { display:block; margin:0 auto; transform:translateX(-2px); }
 @media (min-width:1200px){ .staff-v5-grid { transform:translateX(-8px); } }
+
+
+/* V7 staff role colors + 3D reliability */
+.staff-v5-role{font-weight:900}
+.staff-v5-card[data-role*="OWNER"] .staff-v5-role{color:#8f1f2b}
+.staff-v5-card[data-role*="DEVELOPER"] .staff-v5-role{color:#1d4f73}
+.staff-v5-card[data-role="HEAD ADMIN"] .staff-v5-role{color:#ff394d}
+.staff-v5-card[data-role="OPIEKUN"] .staff-v5-role{color:#c6a51c}
+.staff-v5-card[data-role="SENIOR MODERATOR"] .staff-v5-role{color:#24643e}
+.staff-v5-card[data-role*="OWNER"] .live-dot{color:#8f1f2b}
+.staff-v5-card[data-role="HEAD ADMIN"] .live-dot{color:#ff394d}
+.staff-v5-card[data-role="OPIEKUN"] .live-dot{color:#c6a51c}
+.staff-v5-card[data-role="SENIOR MODERATOR"] .live-dot{color:#24643e}
+.staff-v5-card[data-role*="OWNER"] .live-dot:before{background:#8f1f2b}
+.staff-v5-card[data-role="HEAD ADMIN"] .live-dot:before{background:#ff394d}
+.staff-v5-card[data-role="OPIEKUN"] .live-dot:before{background:#c6a51c}
+.staff-v5-card[data-role="SENIOR MODERATOR"] .live-dot:before{background:#24643e}
+.skin3d-wrap{min-height:390px}
+.skin3d-wrap canvas{position:relative;z-index:2}
+.skin3d-wrap.viewer-ready{background:radial-gradient(circle at 50% 42%,rgba(229,9,26,.12),transparent 56%),#09090b}
+.skin3d-wrap.viewer-error:before{content:'NIE UDAŁO SIĘ ZAŁADOWAĆ SKINA';position:absolute;inset:0;display:grid;place-items:center;color:#555;font-size:9px;font-weight:900;letter-spacing:.13em;z-index:4}
+.skin3d-wrap .drag-hint{z-index:6}
+@media(min-width:1200px){.staff-v5-grid{transform:none}}
