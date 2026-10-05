@@ -4,23 +4,33 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BADPLAY — Minecraft Earth SMP</title>
-<meta name="description" content="BADPLAY — polski serwer Minecraft Earth SMP. Graj na mapie świata, buduj własne państwo i dołącz do społeczności.">
+<meta name="description" content="BADPLAY — polski serwer Minecraft Earth SMP. Graj na prawdziwej mapie Ziemi, buduj państwa, handluj i twórz własną historię.">
 <meta name="theme-color" content="#090909">
-<link rel="icon" href="assets/logo.png">
+<meta property="og:title" content="BADPLAY — Minecraft Earth SMP">
+<meta property="og:description" content="Wbij na BADPLAY i zbuduj swoje własne imperium na mapie Ziemi.">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/logo.png">
+<link rel="shortcut icon" href="assets/logo.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<link rel="manifest" href="site.webmanifest">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="header">
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="noise"></div>
+<div class="particles" id="particles" aria-hidden="true"></div>
+
+<header class="header" id="header">
   <div class="wrap nav">
     <a class="brand" href="#start" aria-label="BADPLAY strona główna">
       <img src="assets/logo.png" alt="BADPLAY">
       <span>BAD<span>PLAY</span></span>
     </a>
-    <nav>
+    <nav id="mainNav">
       <a href="#serwer">SERWER</a>
       <a href="#funkcje">FUNKCJE</a>
+      <a href="#administracja">ADMINISTRACJA</a>
+      <a href="#earth">EARTH SMP</a>
       <a href="#dolacz">DOŁĄCZ</a>
-      <a href="#spolecznosc">SPOŁECZNOŚĆ</a>
     </nav>
     <div class="nav-actions">
       <a class="btn btn-store" href="https://sklep.badplay.pl">SKLEP</a>
@@ -29,47 +39,116 @@
     </div>
   </div>
 </header>
+
 <main id="start">
 <section class="hero">
   <div class="grid-bg"></div><div class="glow glow-a"></div><div class="glow glow-b"></div>
+  <div class="hero-orbit orbit-1"></div><div class="hero-orbit orbit-2"></div>
   <div class="wrap hero-grid">
-    <div class="hero-copy">
+    <div class="hero-copy reveal">
       <div class="kicker"><span></span> MINECRAFT EARTH SMP · POLSKA</div>
       <h1>Świat jest<br><em>Twój.</em></h1>
       <p class="lead">BADPLAY to survival na prawdziwej mapie Ziemi. Buduj miasta, twórz państwa, handluj i pisz własną historię razem z innymi graczami.</p>
       <div class="hero-buttons">
-        <button class="btn btn-primary copy" data-copy="play.badplay.pl">KOPIUJ IP <b>play.badplay.pl</b></button>
+        <button class="btn btn-primary copy copy-main" data-copy="badplay.pl">KOPIUJ IP <b>badplay.pl</b></button>
         <a class="btn btn-dark" href="https://sklep.badplay.pl">OTWÓRZ SKLEP <span>↗</span></a>
+        <a class="btn btn-map" href="https://mapa.badplay.pl">OTWÓRZ MAPĘ <span>↗</span></a>
       </div>
-      <div class="quick"><span class="online"><i></i> SERWER ONLINE</span><span>JAVA 1.21.4+</span><span>BEZ WHITELISTY</span></div>
+      <div class="quick"><span class="online"><i></i> SERWER ONLINE</span><span>JAVA 26.2</span><span>EARTH SMP</span></div>
     </div>
-    <div class="hero-art">
-      <div class="art-frame"><img src="assets/badplay-logo.png" alt="Logo BADPLAY"><div class="art-red"></div></div>
-      <div class="floating-card"><strong>play.badplay.pl</strong><span>ADRES SERWERA</span></div>
+    <div class="hero-art reveal reveal-delay">
+      <div class="art-frame tilt">
+        <div class="scanline"></div>
+        <img src="assets/badplay-logo.png" alt="Logo BADPLAY">
+        <div class="art-red"></div>
+        <div class="art-corner c1"></div><div class="art-corner c2"></div><div class="art-corner c3"></div><div class="art-corner c4"></div>
+      </div>
+      <div class="floating-card float-a"><strong>badplay.pl</strong><span>ADRES SERWERA</span></div>
+      <div class="floating-card float-b"><strong>26.2</strong><span>ZALECANA WERSJA</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><span></span> PRZEWIŃ</div>
+</section>
+
+<section class="stats">
+  <div class="wrap stats-grid">
+    <div class="stat reveal"><b data-count="1000">0</b><span>SKALA ŚWIATA · 1 : 1000</span></div>
+    <div class="stat reveal"><b>24/7</b><span>DOSTĘPNOŚĆ SERWERA</span></div>
+    <div class="stat reveal"><b>26.2</b><span>ZALECANA WERSJA JAVA</span></div>
+    <div class="stat reveal"><b>EU</b><span>LOKALIZACJA SERWERA</span></div>
+  </div>
+</section>
+
+<section id="serwer" class="section server-section">
+  <div class="wrap">
+    <div class="section-title reveal"><div><span class="kicker"><span></span> BADPLAY</span><h2>Serwer zbudowany<br><em>dla graczy.</em></h2></div><p>Wszystko, czego potrzebujesz, żeby wejść do gry bez zbędnego czekania. Jeden adres, jedna społeczność, ogromny świat.</p></div>
+    <div class="info-panel reveal">
+      <div class="info-main"><span class="label">ADRES SERWERA</span><strong>badplay.pl</strong><button class="copy small" data-copy="badplay.pl">KOPIUJ</button><span class="copy-status">SKOPIOWANO</span></div>
+      <div><span class="label">WERSJA</span><strong>Java 26.2</strong></div>
+      <div><span class="label">TRYB</span><strong>Earth SMP</strong></div>
+      <div><span class="label">STATUS</span><strong class="status-text"><i></i> Online</strong></div>
     </div>
   </div>
 </section>
-<section class="stats"><div class="wrap stats-grid">
-  <div><b>1 : 1000</b><span>SKALA ŚWIATA</span></div><div><b>24/7</b><span>DOSTĘPNOŚĆ</span></div><div><b>1.21.4+</b><span>WERSJA JAVA</span></div><div><b>EU</b><span>LOKALIZACJA</span></div>
-</div></section>
-<section id="serwer" class="section"><div class="wrap">
-  <div class="section-title"><div><span class="kicker"><span></span> BADPLAY</span><h2>Serwer zbudowany<br><em>dla graczy.</em></h2></div><p>Wszystko, czego potrzebujesz, żeby wejść do gry bez zbędnego czekania.</p></div>
-  <div class="info-panel"><div class="info-main"><span class="label">ADRES SERWERA</span><strong>play.badplay.pl</strong><button class="copy small" data-copy="play.badplay.pl">KOPIUJ</button></div><div><span class="label">WERSJA</span><strong>Java 1.21.4+</strong></div><div><span class="label">WHITELISTA</span><strong>Brak</strong></div><div><span class="label">TRYB</span><strong>Earth SMP</strong></div></div>
-</div></section>
-<section id="funkcje" class="section features"><div class="wrap">
-  <div class="section-title"><div><span class="kicker"><span></span> CO CZEKA NA CIEBIE</span><h2>Nie tylko kolejny<br><em>serwer survival.</em></h2></div><p>Świat BADPLAY został zaprojektowany tak, aby rozgrywka miała sens także poza samym budowaniem.</p></div>
-  <div class="cards">
-    <article><span class="num">01</span><div class="icon">◈</div><h3>Prawdziwa Ziemia</h3><p>Graj na mapie opartej o rzeczywistą geografię. Znajdź swoje miejsce i rozwijaj je od zera.</p></article>
-    <article><span class="num">02</span><div class="icon">⌂</div><h3>Państwa i miasta</h3><p>Twórz własne państwa, rozwijaj miasta, ustalaj granice i buduj swoją pozycję na serwerze.</p></article>
-    <article><span class="num">03</span><div class="icon">₿</div><h3>Gospodarka</h3><p>Handluj, rozwijaj sklepy i korzystaj z ekonomii tworzonej przez społeczność graczy.</p></article>
-    <article><span class="num">04</span><div class="icon">⌁</div><h3>Żywa mapa</h3><p>Sprawdzaj świat serwera online i orientuj się w położeniu miast, państw oraz najważniejszych miejsc.</p></article>
+
+<section id="funkcje" class="section features">
+  <div class="wrap">
+    <div class="section-title reveal"><div><span class="kicker"><span></span> CO CZEKA NA CIEBIE</span><h2>Nie tylko kolejny<br><em>serwer survival.</em></h2></div><p>Świat BADPLAY został zaprojektowany tak, aby rozgrywka miała sens także poza samym budowaniem.</p></div>
+    <div class="cards">
+      <article class="feature-card reveal tilt"><span class="num">01</span><div class="icon">◈</div><h3>Prawdziwa Ziemia</h3><p>Graj na mapie opartej o rzeczywistą geografię. Znajdź swoje miejsce i rozwijaj je od zera.</p><span class="card-line"></span></article>
+      <article class="feature-card reveal tilt"><span class="num">02</span><div class="icon">⌂</div><h3>Państwa i miasta</h3><p>Twórz własne państwa, rozwijaj miasta, ustalaj granice i buduj swoją pozycję na serwerze.</p><span class="card-line"></span></article>
+      <article class="feature-card reveal tilt"><span class="num">03</span><div class="icon">₿</div><h3>Gospodarka</h3><p>Handluj, rozwijaj sklepy i korzystaj z ekonomii tworzonej przez społeczność graczy.</p><span class="card-line"></span></article>
+      <article class="feature-card reveal tilt"><span class="num">04</span><div class="icon">⌁</div><h3>Żywa mapa</h3><p>Sprawdzaj świat serwera online i orientuj się w położeniu miast, państw oraz najważniejszych miejsc.</p><span class="card-line"></span></article>
+    </div>
   </div>
-</div></section>
-<section id="dolacz" class="join"><div class="wrap join-box"><div><span class="kicker"><span></span> GOTOWY?</span><h2>Zacznij swoją<br><em>historię.</em></h2><p>Wejdź na serwer, znajdź miejsce na mapie i zacznij budować. Reszta zależy od Ciebie.</p></div><div class="join-actions"><button class="btn btn-primary copy" data-copy="play.badplay.pl">KOPIUJ play.badplay.pl</button><a class="btn btn-outline light" href="https://dc.badplay.pl">DOŁĄCZ NA DISCORD ↗</a></div></div></section>
-<section id="spolecznosc" class="section community"><div class="wrap community-grid"><div><span class="kicker"><span></span> SPOŁECZNOŚĆ</span><h2>Nie graj<br><em>sam.</em></h2><p>Discord BADPLAY to miejsce na ogłoszenia, pomoc, rozmowy z graczami i informacje o serwerze.</p><a class="btn btn-primary" href="https://dc.badplay.pl">OTWÓRZ DISCORD ↗</a></div><div class="discord-card"><div class="discord-mark">◉</div><div><strong>BADPLAY</strong><span>discord.badplay.pl</span></div><b>↗</b></div></div></section>
+</section>
+
+<section id="administracja" class="section staff-section">
+  <div class="wrap">
+    <div class="section-title reveal"><div><span class="kicker"><span></span> LUDZIE BADPLAY</span><h2>Poznaj naszą<br><em>administrację.</em></h2></div><p>To oni pilnują porządku, rozwijają serwer i dbają o to, żeby na BADPLAY zawsze coś się działo.</p></div>
+    <div class="staff-grid">
+      <article class="staff-card reveal tilt"><div class="staff-number">01</div><div class="skin-stage"><div class="skin-glow"></div><img src="assets/admin-1.png" alt="Skin administracji BADPLAY" loading="lazy"></div><div class="staff-info"><span>ADMINISTRACJA</span><strong>BADPLAY TEAM</strong></div></article>
+      <article class="staff-card reveal tilt"><div class="staff-number">02</div><div class="skin-stage"><div class="skin-glow"></div><img src="assets/admin-2.png" alt="Skin administracji BADPLAY" loading="lazy"></div><div class="staff-info"><span>ADMINISTRACJA</span><strong>BADPLAY TEAM</strong></div></article>
+      <article class="staff-card reveal tilt"><div class="staff-number">03</div><div class="skin-stage"><div class="skin-glow"></div><img src="assets/admin-3.png" alt="Skin administracji BADPLAY" loading="lazy"></div><div class="staff-info"><span>ADMINISTRACJA</span><strong>BADPLAY TEAM</strong></div></article>
+      <article class="staff-card reveal tilt"><div class="staff-number">04</div><div class="skin-stage"><div class="skin-glow"></div><img src="assets/admin-4.png" alt="Skin administracji BADPLAY" loading="lazy"></div><div class="staff-info"><span>ADMINISTRACJA</span><strong>BADPLAY TEAM</strong></div></article>
+    </div>
+  </div>
+</section>
+
+<section id="earth" class="earth-section">
+  <div class="earth-bg"></div>
+  <div class="wrap">
+    <div class="earth-heading reveal">
+      <div><span class="kicker"><span></span> EARTH SMP</span><h2>Cała Ziemia.<br><em>Twój wybór.</em></h2></div>
+      <div class="earth-copy"><p>Wybierz miejsce, które chcesz nazwać swoim domem. Zbuduj miasto, stwórz państwo i zobacz, jak rozwija się świat BADPLAY.</p><a class="btn btn-primary" href="https://mapa.badplay.pl">PRZEJDŹ DO MAPY ↗</a></div>
+    </div>
+    <div class="map-window reveal">
+      <div class="map-toolbar"><span><i></i> MAPA BADPLAY</span><b>mapa.badplay.pl</b><a href="https://mapa.badplay.pl">PEŁNY EKRAN ↗</a></div>
+      <div class="map-viewport"><iframe src="https://mapa.badplay.pl" title="Mapa Earth SMP BADPLAY" loading="lazy"></iframe><div class="map-fallback"><strong>Mapa BADPLAY</strong><span>Jeśli podgląd się nie załaduje, otwórz mapę bezpośrednio.</span><a href="https://mapa.badplay.pl" class="btn btn-primary">OTWÓRZ MAPĘ ↗</a></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="dolacz" class="join">
+  <div class="wrap join-box reveal">
+    <div><span class="kicker"><span></span> GOTOWY?</span><h2>Zacznij swoją<br><em>historię.</em></h2><p>Wejdź na serwer, znajdź miejsce na mapie i zacznij budować. Reszta zależy od Ciebie.</p></div>
+    <div class="join-actions"><button class="btn btn-primary copy" data-copy="badplay.pl">KOPIUJ badplay.pl</button><a class="btn btn-outline light" href="https://dc.badplay.pl">DOŁĄCZ NA DISCORD ↗</a></div>
+  </div>
+</section>
+
+<section id="spolecznosc" class="section community">
+  <div class="wrap community-grid">
+    <div class="reveal"><span class="kicker"><span></span> SPOŁECZNOŚĆ</span><h2>Nie graj<br><em>sam.</em></h2><p>Discord BADPLAY to miejsce na ogłoszenia, pomoc, rozmowy z graczami i informacje o serwerze.</p><a class="btn btn-primary" href="https://dc.badplay.pl">OTWÓRZ DISCORD ↗</a></div>
+    <a class="discord-card reveal tilt" href="https://dc.badplay.pl"><div class="discord-mark">◉</div><div><strong>BADPLAY</strong><span>dc.badplay.pl</span></div><b>↗</b><div class="discord-pulse"></div></a>
+  </div>
+</section>
 </main>
-<footer><div class="wrap footer-top"><a class="brand" href="#start"><img src="assets/logo.png" alt="BADPLAY"><span>BAD<span>PLAY</span></span></a><div class="footer-links"><a href="https://badplay.pl">STRONA GŁÓWNA</a><a href="https://sklep.badplay.pl">SKLEP</a><a href="https://sklep.badplay.pl/regulamin.html">REGULAMIN</a><a href="https://mapa.badplay.pl">MAPA</a><a href="https://dc.badplay.pl">DISCORD</a></div></div><div class="wrap footer-bottom"><span>© 2026 BADPLAY. WSZELKIE PRAWA ZASTRZEŻONE.</span><span>STWORZONE PRZEZ NAJKLO.</span><span>STRONA ZASILANA PRZEZ VISHOP.PL</span></div></footer>
+
+<footer>
+  <div class="wrap footer-top"><a class="brand" href="#start"><img src="assets/logo.png" alt="BADPLAY"><span>BAD<span>PLAY</span></span></a><div class="footer-links"><a href="https://badplay.pl">STRONA GŁÓWNA</a><a href="https://sklep.badplay.pl">SKLEP</a><a href="https://sklep.badplay.pl/regulamin.html">REGULAMIN</a><a href="https://mapa.badplay.pl">MAPA</a><a href="https://dc.badplay.pl">DISCORD</a></div></div>
+  <div class="wrap footer-bottom"><span>© 2026 BADPLAY. WSZELKIE PRAWA ZASTRZEŻONE.</span><span>STWORZONE PRZEZ NAJKLO.</span><span>BADPLAY.PL · EARTH SMP</span></div>
+</footer>
 <div class="toast" id="toast"></div>
 <script src="app.js"></script>
-  
-</body></html>
+</body>
+</html>
