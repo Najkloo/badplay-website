@@ -75,7 +75,8 @@
     staffData[username] = { role: card.dataset.role, index: card.dataset.index, name: username };
   });
 
-  const skinUrl = username => `https://mc-heads.net/skin/${encodeURIComponent(username)}`;
+  const skinSources = { MafiaBiedry: 'https://mc-heads.net/skin/8d04dc14f6389ec6' };
+  const skinUrl = username => `${skinSources[username] || `https://mc-heads.net/skin/${encodeURIComponent(username)}`}?v=badplay6`;
 
   function makeViewer(canvas, username, width = 360, height = 430) {
     if (!canvas || !window.skinview3d) return null;
@@ -87,7 +88,12 @@
       viewer.globalLight.intensity = 2.8;
       viewer.cameraLight.intensity = 0.65;
       viewer.autoRotate = true;
-      viewer.autoRotateSpeed = 0.75;
+      viewer.autoRotateSpeed = 0.38;
+      // Start from a clean, frontal angle instead of showing the model from the side.
+      if (viewer.playerObject) viewer.playerObject.rotation.y = Math.PI;
+      if (viewer.controls) {
+        viewer.controls.rotateSpeed = 0.75;
+      }
       viewer.animation = new skinview3d.IdleAnimation();
       viewer.animation.speed = 0.85;
       if (viewer.controls) {
