@@ -132,3 +132,30 @@ footer{position:relative;z-index:2;border-top:1px solid #222;background:#050505}
 @media(max-width:1100px){.skin3d-wrap{height:350px!important}}
 @media(max-width:800px){.skin3d-wrap{height:330px!important}}
 @media(max-width:520px){.skin3d-wrap{height:370px!important}.staff-v5-info h3{font-size:22px!important}}
+
+
+/* V10 — staff final polish: readable names, visible rank colors, wider 3D models */
+.staff-v5-info{min-width:0!important;display:flex!important;align-items:flex-end!important;justify-content:space-between!important;gap:12px!important}
+.staff-v5-info>div{min-width:0!important;flex:1 1 auto!important}
+.staff-v5-info h3{font-size:clamp(19px,1.55vw,24px)!important;line-height:1.05!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;overflow-wrap:normal!important;word-break:normal!important;letter-spacing:-.035em!important}
+.staff-v5-role{position:relative!important;z-index:5!important;display:flex!important;align-items:center!important;flex-wrap:wrap!important;min-height:17px!important;line-height:1.2!important;overflow:visible!important}
+.staff-v5-role i{opacity:1!important;visibility:visible!important;font-style:normal!important;font-weight:900!important}
+.staff-v5-role .role-owner{color:#9b1828!important}
+.staff-v5-role .role-developer{color:#245b86!important}
+.staff-v5-role .role-head,.staff-v5-role .role-head-admin{color:#ff4254!important}
+.staff-v5-role .role-opiekun{color:#d6b62a!important}
+.staff-v5-role .role-senior,.staff-v5-role .role-senior-moderator{color:#2b7448!important}
+.staff-v5-role .role-sep{color:#56565d!important}
+.staff-v5 .skin3d-wrap{height:360px!important;overflow:hidden!important}
+.staff-v5 .skin3d-wrap canvas{width:100%!important;height:100%!important;display:block!important;transform:none!important}
+.staff-v5 .skin-fallback{display:none!important}
+.skin3d-wrap.viewer-error:after{content:'NIE UDAŁO SIĘ ZAŁADOWAĆ SKINA';position:absolute;inset:0;display:grid;place-items:center;color:#6d6d73;font-size:9px;font-weight:900;letter-spacing:.12em;z-index:7;pointer-events:none}
+
+/* Modal: never crop long names and keep the rank color visible. */
+.skin3d-modal-copy{min-width:0!important;overflow:hidden!important}
+.skin3d-modal-copy .staff-v5-role{display:flex!important;max-width:100%!important;overflow:visible!important;margin-bottom:10px!important}
+.skin3d-modal-copy .staff-v5-role i{font-size:10px!important;line-height:1.2!important}
+.skin3d-modal-copy h3{font-size:clamp(34px,4vw,54px)!important;line-height:1!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;overflow-wrap:break-word!important;word-break:normal!important;max-width:100%!important;margin:0!important;letter-spacing:-.045em!important}
+.skin3d-modal-view canvas{display:block!important;width:100%!important;height:100%!important}
+@media(max-width:900px){.staff-v5-info h3{font-size:20px!important}.skin3d-modal-copy h3{font-size:clamp(32px,7vw,46px)!important}}
+@media(max-width:600px){.staff-v5-info h3{font-size:21px!important}.staff-v5-role{font-size:8px!important}.skin3d-modal-copy h3{font-size:34px!important}}

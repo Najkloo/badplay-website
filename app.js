@@ -67,7 +67,7 @@
   const hero=$('.hero'),grid=$('.grid-bg'),glow=$('.glow-a');
   addEventListener('scroll',()=>{if(!hero)return;const y=Math.min(scrollY,700);grid?.style.setProperty('transform',`perspective(700px) rotateX(10deg) scale(1.2) translateY(${y*.05}px)`);glow?.style.setProperty('transform',`translate(${y*.03}px,${y*.08}px)`)},{passive:true});
 
-  // BADPLAY 3D staff gallery — live Minecraft skins via MCHeads + skinview3d.
+  // BADPLAY 3D staff gallery — SkinRender texture API + SkinView3D.
   const staffViewers = new Map();
   const staffData = {};
   $$('.staff-v5-card').forEach(card => {
@@ -75,49 +75,59 @@
     staffData[username] = { role: card.dataset.role, index: card.dataset.index, name: username };
   });
 
+  // SkinRender supports usernames and texture hashes and returns raw skin textures
+  // with CORS enabled, which makes it much more reliable on GitHub Pages than
+  // loading the NameMC image CDN directly into WebGL.
   const skinSources = {
-    // Skin #1 currently shown on MafiaBiedry's NameMC profile.
-    MafiaBiedry: 'https://s.namemc.com/i/8d04dc14f6389ec6.png'
+    // #1 skin currently shown on MafiaBiedry's NameMC skin history.
+    MafiaBiedry: 'https://skinrender.dev/render/8d04dc14f6389ec6/skin?size=64'
   };
-  const skinUrl = username => `${skinSources[username] || `https://mc-heads.net/skin/${encodeURIComponent(username)}`}?v=badplay9`;
+  const skinUrl = username => skinSources[username] || `https://skinrender.dev/render/${encodeURIComponent(username)}/skin?size=64`;
 
   function makeViewer(canvas, username, width = 360, height = 430) {
     if (!canvas || !window.skinview3d) return null;
     try {
       const host = canvas.closest('.skin3d-wrap,.skin3d-modal-view');
-      if (host && !host.querySelector('.skin-fallback')) {
-        const fallback = document.createElement('img');
-        fallback.className = 'skin-fallback';
-        fallback.alt = '';
-        fallback.setAttribute('aria-hidden','true');
-        fallback.src = username === 'MafiaBiedry' ? skinSources.MafiaBiedry : `https://mc-heads.net/body/${encodeURIComponent(username)}/400`;
-        host.insertBefore(fallback, canvas);
-      }
-      const viewer = new skinview3d.SkinViewer({ canvas, width, height, skin: skinUrl(username) });
+      if (host) host.classList.remove('viewer-error');
+
+      const url = skinUrl(username);
+      const viewer = new skinview3d.SkinViewer({
+        canvas,
+        width,
+        height,
+        skin: url,
+        // Use the normal Minecraft player proportions. The previous auto-detect
+        // made several staff skins look unnaturally thin in the gallery.
+        model: 'default'
+      });
       viewer.background = 0x09090b;
-      viewer.fov = 38;
-      viewer.zoom = 0.78;
-      viewer.globalLight.intensity = 2.8;
-      viewer.cameraLight.intensity = 0.65;
+      viewer.fov = 36;
+      viewer.zoom = 0.64;
+      viewer.globalLight.intensity = 2.7;
+      viewer.cameraLight.intensity = 0.7;
       viewer.autoRotate = true;
-      viewer.autoRotateSpeed = 0.22;
-      // Start from a clean, frontal angle instead of showing the model from the side.
+      viewer.autoRotateSpeed = 0.18;
       if (viewer.playerObject) viewer.playerObject.rotation.y = 0;
       if (viewer.controls) {
-        viewer.controls.rotateSpeed = 0.75;
-      }
-      viewer.animation = new skinview3d.IdleAnimation();
-      viewer.animation.speed = 0.85;
-      // Explicitly reload the texture so GitHub Pages/CDN timing cannot leave a blank canvas.
-      if (typeof viewer.loadSkin === 'function') {
-        Promise.resolve(viewer.loadSkin(skinUrl(username))).catch(() => {});
-      }
-      if (viewer.controls) {
+        viewer.controls.rotateSpeed = 0.72;
         viewer.controls.enableRotate = true;
         viewer.controls.enableZoom = true;
         viewer.controls.enablePan = false;
       }
-      canvas.closest('.skin3d-wrap,.skin3d-modal-view')?.classList.add('viewer-ready');
+      viewer.animation = new skinview3d.IdleAnimation();
+      viewer.animation.speed = 0.72;
+
+      // Explicitly load with the DEFAULT (wide-arm) model.
+      viewer.loadSkin(url, { model: 'default' })
+        .then(() => {
+          host?.classList.add('viewer-ready');
+          host?.classList.remove('viewer-error');
+        })
+        .catch(err => {
+          console.warn('Skin texture failed:', username, err);
+          host?.classList.add('viewer-error');
+        });
+
       return viewer;
     } catch (err) {
       console.warn('SkinView3D:', username, err);
@@ -149,12 +159,21 @@
   let modalViewer = null;
   let currentStaff = null;
   function roleMarkup(role) {
+    const colors = {
+      OWNER: '#9b1828',
+      DEVELOPER: '#245b86',
+      'HEAD ADMIN': '#ff4254',
+      OPIEKUN: '#d6b62a',
+      'SENIOR MODERATOR': '#2b7448'
+    };
     const parts = String(role).split(/\s*\|\s*|\s+·\s+/).filter(Boolean);
     return parts.map(part => {
       const key = part.trim().toUpperCase();
-      const cls = key === 'OWNER' ? 'role-owner' : key === 'DEVELOPER' ? 'role-developer' : key === 'HEAD ADMIN' ? 'role-head' : key === 'OPIEKUN' ? 'role-opiekun' : key === 'SENIOR MODERATOR' ? 'role-senior' : '';
-      return cls ? `<i class=\"${cls}\">${part.trim()}</i>` : `<i>${part.trim()}</i>`;
-    }).join('<b class=\"role-sep\"> · </b>');
+      const color = colors[key];
+      return color
+        ? `<i class="role-${key.toLowerCase().replace(/\s+/g,'-')}" style="color:${color}!important;text-shadow:0 0 12px ${color};font-style:normal;font-weight:900">${part.trim()}</i>`
+        : `<i>${part.trim()}</i>`;
+    }).join('<b class="role-sep"> · </b>');
   }
   function openStaff3D(card) {
     if (!skinModal || !modalCanvas) return;
