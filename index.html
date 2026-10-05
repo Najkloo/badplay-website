@@ -4,28 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BADPLAY — Minecraft Earth SMP</title>
-<meta name="description" content="BADPLAY — polski serwer Minecraft Earth SMP. Graj na prawdziwej mapie Ziemi, buduj państwa, handluj i twórz własną historię.">
-<meta name="theme-color" content="#090909">
+<meta name="description" content="BADPLAY — polski Minecraft Earth SMP. Prawdziwa mapa Ziemi, państwa, miasta, ekonomia i społeczność.">
+<meta name="theme-color" content="#080808">
 <meta property="og:title" content="BADPLAY — Minecraft Earth SMP">
-<meta property="og:description" content="Wbij na BADPLAY i zbuduj swoje własne imperium na mapie Ziemi.">
-<link rel="icon" type="image/png" sizes="64x64" href="assets/logo.png">
-<link rel="shortcut icon" href="assets/logo.png">
-<link rel="apple-touch-icon" href="assets/logo.png">
-<link rel="manifest" href="site.webmanifest">
-<link rel="stylesheet" href="style.css">
+<meta property="og:description" content="Zbuduj swoje państwo na prawdziwej mapie Ziemi.">
+<link rel="icon" type="image/png" sizes="64x64" href="./assets/logo.png?v=3">
+<link rel="shortcut icon" href="./assets/logo.png?v=3">
+<link rel="apple-touch-icon" href="./assets/logo.png?v=3">
+<link rel="manifest" href="./site.webmanifest?v=3">
+<link rel="stylesheet" href="./style.css?v=3">
 </head>
 <body>
-<div class="cursor-glow" id="cursorGlow"></div>
-<div class="noise"></div>
+<div class="page-progress" id="pageProgress"></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+<div class="noise" aria-hidden="true"></div>
 <div class="particles" id="particles" aria-hidden="true"></div>
 
 <header class="header" id="header">
   <div class="wrap nav">
-    <a class="brand" href="#start" aria-label="BADPLAY strona główna">
-      <img src="assets/logo.png" alt="BADPLAY">
+    <a class="brand" href="#start" aria-label="BADPLAY — strona główna">
+      <span class="brand-mark"><img src="./assets/logo.png?v=3" alt=""></span>
       <span>BAD<span>PLAY</span></span>
     </a>
-    <nav id="mainNav">
+    <nav id="mainNav" aria-label="Główna nawigacja">
       <a href="#serwer">SERWER</a>
       <a href="#funkcje">FUNKCJE</a>
       <a href="#administracja">ADMINISTRACJA</a>
@@ -33,38 +34,45 @@
       <a href="#dolacz">DOŁĄCZ</a>
     </nav>
     <div class="nav-actions">
-      <a class="btn btn-store" href="https://sklep.badplay.pl">SKLEP</a>
-      <a class="btn btn-outline" href="https://dc.badplay.pl">DISCORD</a>
-      <button class="menu" id="menu" aria-label="Otwórz menu"><i></i><i></i><i></i></button>
+      <a class="btn btn-store" href="https://sklep.badplay.pl">SKLEP <span>↗</span></a>
+      <a class="btn btn-outline nav-discord" href="https://dc.badplay.pl">DISCORD</a>
+      <button class="menu" id="menu" aria-label="Otwórz menu" aria-expanded="false"><i></i><i></i><i></i></button>
     </div>
   </div>
 </header>
 
 <main id="start">
 <section class="hero">
-  <div class="grid-bg"></div><div class="glow glow-a"></div><div class="glow glow-b"></div>
-  <div class="hero-orbit orbit-1"></div><div class="hero-orbit orbit-2"></div>
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="hero-grid-lines" aria-hidden="true"></div>
+  <div class="glow glow-a" aria-hidden="true"></div><div class="glow glow-b" aria-hidden="true"></div>
+  <div class="hero-orbit orbit-1" aria-hidden="true"></div><div class="hero-orbit orbit-2" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div class="hero-copy reveal">
       <div class="kicker"><span></span> MINECRAFT EARTH SMP · POLSKA</div>
+      <div class="hero-badge"><i></i> ŚWIAT BADPLAY JEST OTWARTY</div>
       <h1>Świat jest<br><em>Twój.</em></h1>
-      <p class="lead">BADPLAY to survival na prawdziwej mapie Ziemi. Buduj miasta, twórz państwa, handluj i pisz własną historię razem z innymi graczami.</p>
+      <p class="lead">Prawdziwa mapa Ziemi. Własne miasta, państwa, granice i gospodarka. Wejdź na BADPLAY i zacznij tworzyć historię, której nie napisze za Ciebie nikt inny.</p>
       <div class="hero-buttons">
-        <button class="btn btn-primary copy copy-main" data-copy="badplay.pl">KOPIUJ IP <b>badplay.pl</b></button>
+        <button class="btn btn-primary copy copy-main" data-copy="badplay.pl">KOPIUJ IP <b>badplay.pl</b><span>⌘</span></button>
         <a class="btn btn-dark" href="https://sklep.badplay.pl">OTWÓRZ SKLEP <span>↗</span></a>
-        <a class="btn btn-map" href="https://mapa.badplay.pl">OTWÓRZ MAPĘ <span>↗</span></a>
+        <a class="btn btn-map" href="#earth">ZOBACZ MAPĘ <span>↓</span></a>
       </div>
-      <div class="quick"><span class="online"><i></i> SERWER ONLINE</span><span>JAVA 26.2</span><span>EARTH SMP</span></div>
+      <div class="quick"><span class="online"><i></i> SERWER ONLINE</span><span>JAVA 26.2</span><span>EARTH SMP</span><span>EU</span></div>
     </div>
     <div class="hero-art reveal reveal-delay">
-      <div class="art-frame tilt">
+      <div class="art-frame tilt" id="heroArt">
         <div class="scanline"></div>
-        <img src="assets/badplay-logo.png" alt="Logo BADPLAY">
+        <div class="art-grid"></div>
+        <div class="art-orb"></div>
+        <img src="./assets/badplay-logo.png?v=3" alt="BADPLAY">
         <div class="art-red"></div>
         <div class="art-corner c1"></div><div class="art-corner c2"></div><div class="art-corner c3"></div><div class="art-corner c4"></div>
+        <div class="art-label"><span>BADPLAY</span><b>EARTH / 26.2</b></div>
       </div>
       <div class="floating-card float-a"><strong>badplay.pl</strong><span>ADRES SERWERA</span></div>
       <div class="floating-card float-b"><strong>26.2</strong><span>ZALECANA WERSJA</span></div>
+      <div class="floating-dot dot-a"></div><div class="floating-dot dot-b"></div>
     </div>
   </div>
   <div class="scroll-hint"><span></span> PRZEWIŃ</div>
@@ -81,7 +89,10 @@
 
 <section id="serwer" class="section server-section">
   <div class="wrap">
-    <div class="section-title reveal"><div><span class="kicker"><span></span> BADPLAY</span><h2>Serwer zbudowany<br><em>dla graczy.</em></h2></div><p>Wszystko, czego potrzebujesz, żeby wejść do gry bez zbędnego czekania. Jeden adres, jedna społeczność, ogromny świat.</p></div>
+    <div class="section-title reveal">
+      <div><span class="kicker"><span></span> BADPLAY</span><h2>Serwer zbudowany<br><em>dla graczy.</em></h2></div>
+      <p>Jeden adres, jedna społeczność i ogromny świat. Bez zbędnych komplikacji — wybierz miejsce, wejdź do gry i zacznij budować.</p>
+    </div>
     <div class="info-panel reveal">
       <div class="info-main"><span class="label">ADRES SERWERA</span><strong>badplay.pl</strong><button class="copy small" data-copy="badplay.pl">KOPIUJ</button><span class="copy-status">SKOPIOWANO</span></div>
       <div><span class="label">WERSJA</span><strong>Java 26.2</strong></div>
@@ -93,45 +104,65 @@
 
 <section id="funkcje" class="section features">
   <div class="wrap">
-    <div class="section-title reveal"><div><span class="kicker"><span></span> CO CZEKA NA CIEBIE</span><h2>Nie tylko kolejny<br><em>serwer survival.</em></h2></div><p>Świat BADPLAY został zaprojektowany tak, aby rozgrywka miała sens także poza samym budowaniem.</p></div>
+    <div class="section-title reveal"><div><span class="kicker"><span></span> CO CZEKA NA CIEBIE</span><h2>Nie tylko kolejny<br><em>survival.</em></h2></div><p>BADPLAY łączy klasyczny Minecraft z rozgrywką opartą o mapę świata, państwa, miasta i społeczność.</p></div>
     <div class="cards">
-      <article class="feature-card reveal tilt"><span class="num">01</span><div class="icon">◈</div><h3>Prawdziwa Ziemia</h3><p>Graj na mapie opartej o rzeczywistą geografię. Znajdź swoje miejsce i rozwijaj je od zera.</p><span class="card-line"></span></article>
-      <article class="feature-card reveal tilt"><span class="num">02</span><div class="icon">⌂</div><h3>Państwa i miasta</h3><p>Twórz własne państwa, rozwijaj miasta, ustalaj granice i buduj swoją pozycję na serwerze.</p><span class="card-line"></span></article>
-      <article class="feature-card reveal tilt"><span class="num">03</span><div class="icon">₿</div><h3>Gospodarka</h3><p>Handluj, rozwijaj sklepy i korzystaj z ekonomii tworzonej przez społeczność graczy.</p><span class="card-line"></span></article>
-      <article class="feature-card reveal tilt"><span class="num">04</span><div class="icon">⌁</div><h3>Żywa mapa</h3><p>Sprawdzaj świat serwera online i orientuj się w położeniu miast, państw oraz najważniejszych miejsc.</p><span class="card-line"></span></article>
+      <article class="feature-card reveal tilt"><span class="num">01</span><div class="icon">◈</div><h3>Prawdziwa Ziemia</h3><p>Znajdź swój region na mapie świata i rozwijaj go od pierwszego bloku.</p><span class="card-line"></span><span class="card-arrow">↗</span></article>
+      <article class="feature-card reveal tilt"><span class="num">02</span><div class="icon">⌂</div><h3>Państwa i miasta</h3><p>Twórz własne państwa, miasta, granice i budowle, które zostaną na mapie.</p><span class="card-line"></span><span class="card-arrow">↗</span></article>
+      <article class="feature-card reveal tilt"><span class="num">03</span><div class="icon">₿</div><h3>Gospodarka</h3><p>Handluj z innymi graczami, rozwijaj sklepy i buduj swoją pozycję ekonomiczną.</p><span class="card-line"></span><span class="card-arrow">↗</span></article>
+      <article class="feature-card reveal tilt"><span class="num">04</span><div class="icon">⌁</div><h3>Żywa mapa</h3><p>Sprawdzaj położenie świata BADPLAY online i planuj kolejne ruchy swojej ekipy.</p><span class="card-line"></span><span class="card-arrow">↗</span></article>
     </div>
   </div>
 </section>
 
 <section id="administracja" class="section staff-section">
+  <div class="staff-light" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="section-title reveal"><div><span class="kicker"><span></span> LUDZIE BADPLAY</span><h2>Poznaj naszą<br><em>administrację.</em></h2></div><p>To oni pilnują porządku, rozwijają serwer i dbają o to, żeby na BADPLAY zawsze coś się działo.</p></div>
+    <div class="section-title reveal"><div><span class="kicker"><span></span> LUDZIE BADPLAY</span><h2>Poznaj naszą<br><em>administrację.</em></h2></div><p>Ekipa, która rozwija serwer, pilnuje porządku i sprawia, że świat BADPLAY cały czas żyje.</p></div>
+    <div class="staff-head reveal"><span><i></i> BADPLAY TEAM</span><b>04 SKINY ADMINISTRACJI</b></div>
     <div class="staff-grid">
-      <article class="staff-card reveal tilt"><div class="staff-number">01</div><div class="skin-stage"><div class="skin-glow"></div><img src="assets/admin-1.png" alt="Skin administracji BADPLAY" loading="lazy"></div><div class="staff-info"><span>ADMINISTRACJA</span><strong>BADPLAY TEAM</strong></div></article>
-      <article class="staff-card reveal tilt"><div class="staff-number">02</div><div class="skin-stage"><div class="skin-glow"></div><img src="assets/admin-2.png" alt="Skin administracji BADPLAY" loading="lazy"></div><div class="staff-info"><span>ADMINISTRACJA</span><strong>BADPLAY TEAM</strong></div></article>
-      <article class="staff-card reveal tilt"><div class="staff-number">03</div><div class="skin-stage"><div class="skin-glow"></div><img src="assets/admin-3.png" alt="Skin administracji BADPLAY" loading="lazy"></div><div class="staff-info"><span>ADMINISTRACJA</span><strong>BADPLAY TEAM</strong></div></article>
-      <article class="staff-card reveal tilt"><div class="staff-number">04</div><div class="skin-stage"><div class="skin-glow"></div><img src="assets/admin-4.png" alt="Skin administracji BADPLAY" loading="lazy"></div><div class="staff-info"><span>ADMINISTRACJA</span><strong>BADPLAY TEAM</strong></div></article>
+      <button class="staff-card reveal tilt" data-skin="1" aria-label="Pokaż skin administracji 01">
+        <span class="staff-number">01</span><div class="skin-stage"><div class="skin-glow"></div><div class="skin-grid"></div><img src="./assets/admin-1.png?v=3" alt="Skin administracji BADPLAY"></div><div class="staff-info"><span>ADMINISTRACJA</span><strong>BADPLAY TEAM</strong><b>POKAŻ SKIN <i>↗</i></b></div>
+      </button>
+      <button class="staff-card reveal tilt" data-skin="2" aria-label="Pokaż skin administracji 02">
+        <span class="staff-number">02</span><div class="skin-stage"><div class="skin-glow"></div><div class="skin-grid"></div><img src="./assets/admin-2.png?v=3" alt="Skin administracji BADPLAY"></div><div class="staff-info"><span>ADMINISTRACJA</span><strong>BADPLAY TEAM</strong><b>POKAŻ SKIN <i>↗</i></b></div>
+      </button>
+      <button class="staff-card reveal tilt" data-skin="3" aria-label="Pokaż skin administracji 03">
+        <span class="staff-number">03</span><div class="skin-stage"><div class="skin-glow"></div><div class="skin-grid"></div><img src="./assets/admin-3.png?v=3" alt="Skin administracji BADPLAY"></div><div class="staff-info"><span>ADMINISTRACJA</span><strong>BADPLAY TEAM</strong><b>POKAŻ SKIN <i>↗</i></b></div>
+      </button>
+      <button class="staff-card reveal tilt" data-skin="4" aria-label="Pokaż skin administracji 04">
+        <span class="staff-number">04</span><div class="skin-stage"><div class="skin-glow"></div><div class="skin-grid"></div><img src="./assets/admin-4.png?v=3" alt="Skin administracji BADPLAY"></div><div class="staff-info"><span>ADMINISTRACJA</span><strong>BADPLAY TEAM</strong><b>POKAŻ SKIN <i>↗</i></b></div>
+      </button>
     </div>
   </div>
 </section>
 
 <section id="earth" class="earth-section">
   <div class="earth-bg"></div>
+  <div class="earth-radar" aria-hidden="true"><span></span></div>
   <div class="wrap">
     <div class="earth-heading reveal">
       <div><span class="kicker"><span></span> EARTH SMP</span><h2>Cała Ziemia.<br><em>Twój wybór.</em></h2></div>
-      <div class="earth-copy"><p>Wybierz miejsce, które chcesz nazwać swoim domem. Zbuduj miasto, stwórz państwo i zobacz, jak rozwija się świat BADPLAY.</p><a class="btn btn-primary" href="https://mapa.badplay.pl">PRZEJDŹ DO MAPY ↗</a></div>
+      <div class="earth-copy"><p>Wybierz miejsce, które chcesz nazwać swoim domem. Zbuduj miasto, stwórz państwo i zobacz, jak rozwija się świat BADPLAY.</p><a class="btn btn-primary" href="https://mapa.badplay.pl">PRZEJDŹ DO MAPY <span>↗</span></a></div>
     </div>
     <div class="map-window reveal">
-      <div class="map-toolbar"><span><i></i> MAPA BADPLAY</span><b>mapa.badplay.pl</b><a href="https://mapa.badplay.pl">PEŁNY EKRAN ↗</a></div>
-      <div class="map-viewport"><iframe src="https://mapa.badplay.pl" title="Mapa Earth SMP BADPLAY" loading="lazy"></iframe><div class="map-fallback"><strong>Mapa BADPLAY</strong><span>Jeśli podgląd się nie załaduje, otwórz mapę bezpośrednio.</span><a href="https://mapa.badplay.pl" class="btn btn-primary">OTWÓRZ MAPĘ ↗</a></div></div>
+      <div class="map-toolbar">
+        <span><i></i> MAPA BADPLAY</span><b>mapa.badplay.pl</b><a href="https://mapa.badplay.pl">PEŁNY EKRAN ↗</a>
+      </div>
+      <div class="map-viewport" id="mapViewport">
+        <div class="map-loading" id="mapLoading"><div class="loader-ring"></div><strong>ŁADOWANIE MAPY</strong><span>mapa.badplay.pl</span></div>
+        <iframe src="https://mapa.badplay.pl/" title="Mapa Earth SMP BADPLAY" loading="lazy" id="mapFrame"></iframe>
+        <div class="map-overlay"><span><i></i> LIVE MAP</span><a href="https://mapa.badplay.pl">OTWÓRZ MAPĘ ↗</a></div>
+        <div class="map-fallback" id="mapFallback"><div class="fallback-icon">⌁</div><strong>Mapa BADPLAY</strong><span>Podgląd mapy może być blokowany przez zewnętrzny serwer.</span><a href="https://mapa.badplay.pl" class="btn btn-primary">OTWÓRZ MAPĘ ↗</a></div>
+      </div>
+      <div class="map-bottom"><span><i></i> MAPA ONLINE</span><span>EARTH SMP</span><span>SKALA 1 : 1000</span></div>
     </div>
   </div>
 </section>
 
 <section id="dolacz" class="join">
+  <div class="join-grid" aria-hidden="true"></div>
   <div class="wrap join-box reveal">
-    <div><span class="kicker"><span></span> GOTOWY?</span><h2>Zacznij swoją<br><em>historię.</em></h2><p>Wejdź na serwer, znajdź miejsce na mapie i zacznij budować. Reszta zależy od Ciebie.</p></div>
+    <div><span class="kicker"><span></span> GOTOWY?</span><h2>Zacznij swoją<br><em>historię.</em></h2><p>Wejdź na BADPLAY, znajdź miejsce na mapie i zacznij budować. Reszta zależy od Ciebie.</p></div>
     <div class="join-actions"><button class="btn btn-primary copy" data-copy="badplay.pl">KOPIUJ badplay.pl</button><a class="btn btn-outline light" href="https://dc.badplay.pl">DOŁĄCZ NA DISCORD ↗</a></div>
   </div>
 </section>
@@ -145,10 +176,21 @@
 </main>
 
 <footer>
-  <div class="wrap footer-top"><a class="brand" href="#start"><img src="assets/logo.png" alt="BADPLAY"><span>BAD<span>PLAY</span></span></a><div class="footer-links"><a href="https://badplay.pl">STRONA GŁÓWNA</a><a href="https://sklep.badplay.pl">SKLEP</a><a href="https://sklep.badplay.pl/regulamin.html">REGULAMIN</a><a href="https://mapa.badplay.pl">MAPA</a><a href="https://dc.badplay.pl">DISCORD</a></div></div>
+  <div class="wrap footer-top"><a class="brand" href="#start"><span class="brand-mark"><img src="./assets/logo.png?v=3" alt=""></span><span>BAD<span>PLAY</span></span></a><div class="footer-links"><a href="#start">STRONA GŁÓWNA</a><a href="https://sklep.badplay.pl">SKLEP</a><a href="https://sklep.badplay.pl/regulamin.html">REGULAMIN</a><a href="https://mapa.badplay.pl">MAPA</a><a href="https://dc.badplay.pl">DISCORD</a></div></div>
   <div class="wrap footer-bottom"><span>© 2026 BADPLAY. WSZELKIE PRAWA ZASTRZEŻONE.</span><span>STWORZONE PRZEZ NAJKLO.</span><span>BADPLAY.PL · EARTH SMP</span></div>
 </footer>
-<div class="toast" id="toast"></div>
-<script src="app.js"></script>
+
+<div class="skin-modal" id="skinModal" aria-hidden="true">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-label="Skin administracji">
+    <button class="modal-close" data-close-modal aria-label="Zamknij">×</button>
+    <span class="modal-kicker">BADPLAY TEAM</span>
+    <strong class="modal-title">SKIN <em id="modalSkinNo">01</em></strong>
+    <div class="modal-skin"><img id="modalSkinImg" src="./assets/admin-1.png?v=3" alt="Skin administracji BADPLAY"></div>
+    <span class="modal-hint">Kliknij poza oknem, aby zamknąć</span>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./app.js?v=3"></script>
 </body>
 </html>
