@@ -76,15 +76,24 @@
   });
 
   const skinSources = { MafiaBiedry: 'https://mc-heads.net/skin/8d04dc14f6389ec6' };
-  const skinUrl = username => `${skinSources[username] || `https://mc-heads.net/skin/${encodeURIComponent(username)}`}?v=badplay7`;
+  const skinUrl = username => `${skinSources[username] || `https://mc-heads.net/skin/${encodeURIComponent(username)}`}?v=badplay8`;
 
   function makeViewer(canvas, username, width = 360, height = 430) {
     if (!canvas || !window.skinview3d) return null;
     try {
+      const host = canvas.closest('.skin3d-wrap,.skin3d-modal-view');
+      if (host && !host.querySelector('.skin-fallback')) {
+        const fallback = document.createElement('img');
+        fallback.className = 'skin-fallback';
+        fallback.alt = '';
+        fallback.setAttribute('aria-hidden','true');
+        fallback.src = `https://mc-heads.net/body/${encodeURIComponent(username)}/400`;
+        host.insertBefore(fallback, canvas);
+      }
       const viewer = new skinview3d.SkinViewer({ canvas, width, height, skin: skinUrl(username) });
       viewer.background = 0x09090b;
-      viewer.fov = 42;
-      viewer.zoom = 0.92;
+      viewer.fov = 38;
+      viewer.zoom = 0.78;
       viewer.globalLight.intensity = 2.8;
       viewer.cameraLight.intensity = 0.65;
       viewer.autoRotate = true;
@@ -96,6 +105,10 @@
       }
       viewer.animation = new skinview3d.IdleAnimation();
       viewer.animation.speed = 0.85;
+      // Explicitly reload the texture so GitHub Pages/CDN timing cannot leave a blank canvas.
+      if (typeof viewer.loadSkin === 'function') {
+        Promise.resolve(viewer.loadSkin(skinUrl(username))).catch(() => {});
+      }
       if (viewer.controls) {
         viewer.controls.enableRotate = true;
         viewer.controls.enableZoom = true;
