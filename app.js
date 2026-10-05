@@ -75,8 +75,11 @@
     staffData[username] = { role: card.dataset.role, index: card.dataset.index, name: username };
   });
 
-  const skinSources = { MafiaBiedry: 'https://mc-heads.net/skin/8d04dc14f6389ec6' };
-  const skinUrl = username => `${skinSources[username] || `https://mc-heads.net/skin/${encodeURIComponent(username)}`}?v=badplay8`;
+  const skinSources = {
+    // Skin #1 currently shown on MafiaBiedry's NameMC profile.
+    MafiaBiedry: 'https://s.namemc.com/i/8d04dc14f6389ec6.png'
+  };
+  const skinUrl = username => `${skinSources[username] || `https://mc-heads.net/skin/${encodeURIComponent(username)}`}?v=badplay9`;
 
   function makeViewer(canvas, username, width = 360, height = 430) {
     if (!canvas || !window.skinview3d) return null;
@@ -87,7 +90,7 @@
         fallback.className = 'skin-fallback';
         fallback.alt = '';
         fallback.setAttribute('aria-hidden','true');
-        fallback.src = `https://mc-heads.net/body/${encodeURIComponent(username)}/400`;
+        fallback.src = username === 'MafiaBiedry' ? skinSources.MafiaBiedry : `https://mc-heads.net/body/${encodeURIComponent(username)}/400`;
         host.insertBefore(fallback, canvas);
       }
       const viewer = new skinview3d.SkinViewer({ canvas, width, height, skin: skinUrl(username) });
@@ -145,13 +148,21 @@
   const modalNameMc = $('#modalNameMc');
   let modalViewer = null;
   let currentStaff = null;
+  function roleMarkup(role) {
+    const parts = String(role).split(/\s*\|\s*|\s+·\s+/).filter(Boolean);
+    return parts.map(part => {
+      const key = part.trim().toUpperCase();
+      const cls = key === 'OWNER' ? 'role-owner' : key === 'DEVELOPER' ? 'role-developer' : key === 'HEAD ADMIN' ? 'role-head' : key === 'OPIEKUN' ? 'role-opiekun' : key === 'SENIOR MODERATOR' ? 'role-senior' : '';
+      return cls ? `<i class=\"${cls}\">${part.trim()}</i>` : `<i>${part.trim()}</i>`;
+    }).join('<b class=\"role-sep\"> · </b>');
+  }
   function openStaff3D(card) {
     if (!skinModal || !modalCanvas) return;
     const username = card.dataset.player;
     const data = staffData[username] || {};
     currentStaff = username;
     modalName.textContent = username;
-    modalRole.textContent = data.role || '';
+    modalRole.innerHTML = roleMarkup(data.role || '');
     modalNo.textContent = data.index || '01';
     modalNameMc.href = `https://pl.namemc.com/profile/${encodeURIComponent(username)}.1`;
     skinModal.classList.add('open');

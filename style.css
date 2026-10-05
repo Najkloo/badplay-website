@@ -110,3 +110,25 @@ footer{position:relative;z-index:2;border-top:1px solid #222;background:#050505}
 .staff-v5 .skin3d-wrap.viewer-error .skin-fallback{z-index:5!important;}
 .staff-v5 .skin3d-wrap.viewer-ready .skin-fallback{opacity:0!important;pointer-events:none;}
 @media(max-width:600px){.staff-v5 .skin-fallback{height:76%;}}
+
+
+/* V9 — final staff polish */
+.staff-v5-role{display:flex!important;align-items:center;flex-wrap:wrap;gap:0;min-height:16px;color:#fff!important;opacity:1!important;visibility:visible!important}
+.staff-v5-role i{display:inline-block!important;font-style:normal!important;font-weight:900!important;opacity:1!important;visibility:visible!important;text-shadow:0 0 12px currentColor}
+.staff-v5-role .role-owner{color:#9b1828!important}
+.staff-v5-role .role-developer{color:#245b86!important}
+.staff-v5-role .role-head{color:#ff4254!important}
+.staff-v5-role .role-opiekun{color:#d6b62a!important}
+.staff-v5-role .role-senior{color:#2b7448!important}
+.staff-v5-role .role-sep{color:#555!important;margin:0 3px!important}
+.staff-v5-card .staff-v5-info>div{min-width:0;max-width:100%}
+.staff-v5-info h3{font-size:clamp(20px,1.8vw,25px)!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;line-height:1.08}
+.staff-v5-info{align-items:flex-end}
+.namemc-link{flex:0 0 auto;white-space:nowrap}
+.skin3d-wrap{height:360px!important}
+.staff-v5 .skin3d-wrap canvas{transform:none!important}
+.skin3d-modal-copy .staff-v5-role{display:flex!important;max-width:100%;margin-bottom:8px}
+.skin3d-modal-copy h3{font-size:clamp(32px,4.2vw,58px)!important;line-height:.98;overflow-wrap:anywhere;word-break:break-word}
+@media(max-width:1100px){.skin3d-wrap{height:350px!important}}
+@media(max-width:800px){.skin3d-wrap{height:330px!important}}
+@media(max-width:520px){.skin3d-wrap{height:370px!important}.staff-v5-info h3{font-size:22px!important}}
