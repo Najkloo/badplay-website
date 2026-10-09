@@ -4,23 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#080808">
-  <meta name="description" content="Konto BADPLAY — logowanie, rejestracja i panel użytkownika.">
+  <meta name="description" content="Konto BADPLAY — profil gracza, statystyki i centrum administracyjne.">
   <title>Konto — BADPLAY</title>
   <link rel="icon" type="image/png" href="./assets/logo.png">
   <link rel="stylesheet" href="./style.css?v=7">
-  <link rel="stylesheet" href="./konto.css?v=1">
+  <link rel="stylesheet" href="./konto.css?v=3">
 </head>
 <body class="account-body">
   <div class="noise" aria-hidden="true"></div>
-  <header class="header account-header">
-    <div class="wrap nav">
-      <a class="brand" href="./index.html" aria-label="BADPLAY — strona główna"><span class="brand-mark"><img src="./assets/logo.png" alt=""></span><span>BAD<span>PLAY</span></span></a>
-      <div class="nav-actions"><a class="btn btn-outline" href="./index.html">← STRONA GŁÓWNA</a></div>
-    </div>
-  </header>
-  <main class="account-main">
-    <div class="account-glow" aria-hidden="true"></div>
-    <section class="account-shell" aria-labelledby="accountTitle">
+  <header class="header account-header"><div class="wrap nav">
+    <a class="brand" href="./index.html" aria-label="BADPLAY — strona główna"><span class="brand-mark"><img src="./assets/logo.png" alt=""></span><span>BAD<span>PLAY</span></span></a>
+    <div class="nav-actions"><a class="btn btn-outline" href="./index.html">← STRONA GŁÓWNA</a></div>
+  </div></header>
+  <main class="account-main"><div class="account-glow" aria-hidden="true"></div>
+    <section class="account-shell account-shell-wide" aria-labelledby="accountTitle">
       <div class="account-brandline"><span class="account-mark">BP</span><span>BADPLAY <i>PORTAL</i></span></div>
       <div id="setupNotice" class="notice notice-warning" role="status">System kont wymaga konfiguracji Supabase. Uzupełnij <code>supabase-config.js</code> i wykonaj instrukcje z pliku <code>AUTH-SETUP.md</code>.</div>
       <div id="authView">
@@ -30,23 +27,40 @@
           <label for="email">Adres e-mail</label><input id="email" name="email" type="email" autocomplete="email" placeholder="ty@przyklad.pl" required maxlength="254">
           <div id="usernameField" class="field-hidden"><label for="minecraftName">Nick Minecraft <span>(opcjonalnie)</span></label><input id="minecraftName" name="minecraftName" type="text" autocomplete="off" placeholder="TwójNick" minlength="3" maxlength="16" pattern="[A-Za-z0-9_]{3,16}"></div>
           <label for="password">Hasło</label><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Minimum 8 znaków" required minlength="8" maxlength="128">
-          <button class="btn btn-primary auth-submit" id="submitButton" type="submit">ZALOGUJ SIĘ <span>→</span></button>
-          <button class="text-button" id="resetPassword" type="button">Nie pamiętasz hasła?</button>
+          <button class="btn btn-primary auth-submit" id="submitButton" type="submit">ZALOGUJ SIĘ <span>→</span></button><button class="text-button" id="resetPassword" type="button">Nie pamiętasz hasła?</button>
         </form>
-        <div id="authMessage" class="notice" role="status" aria-live="polite"></div>
-        <p class="account-legal">Tworząc konto, korzystasz z systemu kont BADPLAY. Nigdy nie podawaj hasła do Minecrafta.</p>
+        <div id="authMessage" class="notice" role="status" aria-live="polite"></div><p class="account-legal">Tworząc konto, korzystasz z systemu kont BADPLAY. Nigdy nie podawaj hasła do Minecrafta.</p>
       </div>
       <div id="userView" class="hidden" aria-live="polite">
-        <div class="account-heading"><span class="kicker"><span></span> PANEL UŻYTKOWNIKA</span><h1>Witaj, <em id="profileName">graczu.</em></h1><p>To Twoje konto BADPLAY. Dodatkowe funkcje są widoczne zgodnie z przypisanymi uprawnieniami.</p></div>
-        <div class="profile-card"><div class="profile-avatar" id="profileAvatar">B</div><div class="profile-info"><strong id="profileEmail">—</strong><span id="profileRole" class="role-pill">UŻYTKOWNIK</span><span id="profileMinecraft">Nick Minecraft: niepowiązany</span></div></div>
-        <div class="profile-edit"><label for="editMinecraftName">Nick Minecraft</label><input id="editMinecraftName" type="text" maxlength="16" minlength="3" pattern="[A-Za-z0-9_]{3,16}" placeholder="TwójNick"><button id="saveProfile" class="btn btn-outline" type="button">ZAPISZ PROFIL</button></div>
-        <section id="adminPanel" class="admin-panel hidden"><div class="admin-panel-heading"><span class="kicker"><span></span> STREFA CHRONIONA</span><h2>Panel <em>administratora.</em></h2></div><p>Twoje konto ma przypisaną rolę administratora. To miejsce na zarządzanie użytkownikami, statystyki Plan i narzędzia administracyjne — kolejne moduły podłączymy do bezpiecznych endpointów.</p><div class="admin-grid"><div><span class="admin-icon">◎</span><strong>Użytkownicy</strong><small>Lista kont i przypisane role</small></div><div><span class="admin-icon">▥</span><strong>Statystyki serwera</strong><small>Integracja z Plan Analytics</small></div><div><span class="admin-icon">⌘</span><strong>Administracja</strong><small>Moduły i ustawienia portalu</small></div></div><div class="notice notice-warning show">Panel administratora jest szkieletem interfejsu. Nie pokazuje jeszcze danych Plan ani nie wykonuje operacji administracyjnych.</div></section>
-        <div class="account-actions"><button id="signOut" class="btn btn-primary" type="button">WYLOGUJ SIĘ <span>↗</span></button><a class="btn btn-outline" href="./index.html">WRÓĆ NA STRONĘ</a></div>
+        <div class="account-heading"><span class="kicker"><span></span> CENTRUM GRACZA</span><h1 id="welcomeHeading">Witaj, <em id="profileName">graczu.</em></h1><p>Twój profil, aktywność i funkcje sieci BADPLAY w jednym miejscu.</p></div>
+        <div class="profile-card"><div class="profile-avatar" id="profileAvatar">B</div><div class="profile-info"><strong id="profileEmail">—</strong><span id="profileRole" class="role-pill">UŻYTKOWNIK</span><span id="profileMinecraft">Nick Minecraft: niepowiązany</span><span id="accountCreated" class="profile-subline">Konto BADPLAY</span></div><button id="refreshDashboard" class="btn btn-outline compact-btn" type="button">ODŚWIEŻ DANE</button></div>
         <div id="profileMessage" class="notice" role="status" aria-live="polite"></div>
+        <section class="portal-section" aria-labelledby="personalStatsTitle"><div class="section-heading"><div><span class="kicker"><span></span> TWOJE PODSUMOWANIE</span><h2 id="personalStatsTitle">Statystyki <em>konta.</em></h2></div><span class="live-chip"><i></i> DANE KONTA</span></div>
+          <div class="metric-grid">
+            <article class="metric-card"><span class="metric-label">STATUS PROFILU</span><strong id="profileCompletion">—</strong><span id="profileCompletionHint">Uzupełnij profil</span><div class="metric-track"><i id="profileCompletionBar"></i></div></article>
+            <article class="metric-card"><span class="metric-label">CZŁONKOSTWO</span><strong id="membershipDays">—</strong><span>dni od rejestracji</span></article>
+            <article class="metric-card"><span class="metric-label">POWIĄZANIE MINECRAFT</span><strong id="minecraftStatus">NIE</strong><span>potwierdzenie własności do dodania</span></article>
+            <article class="metric-card"><span class="metric-label">RANGA PORTALU</span><strong id="membershipRole">GRACZ</strong><span>uprawnienia konta BADPLAY</span></article>
+          </div>
+        </section>
+        <section class="portal-section"><div class="section-heading"><div><span class="kicker"><span></span> PROFIL</span><h2>Twoje <em>dane.</em></h2></div></div>
+          <div class="portal-two-col"><article class="portal-card"><h3>Tożsamość gracza</h3><p>Uzupełnij nick, aby przygotować profil do przyszłego połączenia z Minecraftem.</p><div class="profile-edit"><label for="editMinecraftName">Nick Minecraft</label><input id="editMinecraftName" type="text" maxlength="16" minlength="3" pattern="[A-Za-z0-9_]{3,16}" placeholder="TwójNick"><button id="saveProfile" class="btn btn-outline" type="button">ZAPISZ PROFIL</button></div><p class="subtle-note">Sam wpisany nick nie potwierdza własności konta. Weryfikację w grze dodamy osobno.</p></article>
+          <article class="portal-card"><h3>Ostatnie zdarzenia</h3><div class="event-list" id="accountEvents"><div class="event-row"><span class="event-dot"></span><div><strong>Konto zalogowane</strong><small>Ta sesja portalu</small></div><time>TERAZ</time></div><div class="event-row"><span class="event-dot muted"></span><div><strong>Integracja Minecraft</strong><small>Oczekuje na podłączenie serwera</small></div><time>—</time></div></div></article></div>
+        </section>
+        <section class="portal-section"><div class="section-heading"><div><span class="kicker"><span></span> SIEĆ BADPLAY</span><h2>Usługi i <em>integracje.</em></h2></div></div>
+          <div class="integration-grid"><article class="integration-card"><div class="integration-top"><span class="integration-symbol">MC</span><span class="status-pill status-pending">DO PODŁĄCZENIA</span></div><h3>Minecraft</h3><p>Weryfikacja nicku, status online, czas gry, osiągnięcia i historia sesji.</p><small>Wymaga API/pluginu łączącego konto z UUID gracza.</small></article><article class="integration-card"><div class="integration-top"><span class="integration-symbol">PL</span><span class="status-pill status-pending">DO PODŁĄCZENIA</span></div><h3>Plan Analytics</h3><p>Statystyki czasu gry, aktywności, sesji i historii gracza.</p><small>Wymaga bezpiecznego backendu/API; kluczy Plan nie umieszczamy w przeglądarce.</small></article><article class="integration-card"><div class="integration-top"><span class="integration-symbol">DC</span><span class="status-pill status-pending">OPCJONALNIE</span></div><h3>Discord</h3><p>Powiązanie Discord, role społecznościowe i status weryfikacji.</p><small>Wymaga konfiguracji bota/OAuth.</small></article><article class="integration-card"><div class="integration-top"><span class="integration-symbol">EC</span><span class="status-pill status-pending">DO PODŁĄCZENIA</span></div><h3>Ekonomia</h3><p>Saldo, waluty, ranking i historia transakcji z serwera.</p><small>Wymaga kontrolowanego endpointu odczytującego dane ekonomii.</small></article></div>
+        </section>
+        <section id="adminPanel" class="portal-section admin-panel hidden"><div class="section-heading"><div><span class="kicker"><span></span> STREFA CHRONIONA</span><h2>Centrum <em>administratora.</em></h2><p class="section-description">Dane pobierane z Supabase. Funkcje serwerowe zostaną aktywowane po podłączeniu bezpiecznych integracji.</p></div><span class="status-pill status-live">ADMIN</span></div>
+          <div class="metric-grid admin-metrics"><article class="metric-card"><span class="metric-label">KONTA ŁĄCZNIE</span><strong id="adminTotalUsers">—</strong><span>profile w bazie</span></article><article class="metric-card"><span class="metric-label">ADMINISTRATORZY</span><strong id="adminCount">—</strong><span>konta z rolą admin</span></article><article class="metric-card"><span class="metric-label">NOWE KONTA (30 DNI)</span><strong id="adminNewUsers">—</strong><span>na podstawie daty rejestracji</span></article><article class="metric-card"><span class="metric-label">INTEGRACJE ONLINE</span><strong>0 / 4</strong><span>czekają na backend/API</span></article></div>
+          <div class="admin-chart-grid"><article class="portal-card chart-card"><div class="chart-title"><div><h3>Rejestracje</h3><p>Ostatnie 14 dni · rzeczywiste profile</p></div><span class="chart-total" id="chartTotal">—</span></div><canvas id="registrationChart" height="190" aria-label="Wykres rejestracji w ciągu 14 dni"></canvas><div class="chart-legend"><span><i></i> Nowe konta</span></div></article><article class="portal-card chart-card"><div class="chart-title"><div><h3>Role kont</h3><p>Rozkład uprawnień</p></div></div><div class="role-chart-wrap"><div class="role-donut" id="roleDonut"><div><strong id="roleUserCount">—</strong><small>użytkowników</small></div></div><div class="role-legend"><span><i class="legend-user"></i>Użytkownicy <b id="roleUserLegend">—</b></span><span><i class="legend-admin"></i>Administratorzy <b id="roleAdminLegend">—</b></span></div></div></article></div>
+          <article class="portal-card users-card"><div class="chart-title users-title"><div><h3>Użytkownicy BADPLAY</h3><p>Lista profili dostępnych dla administratora</p></div><button id="reloadUsers" class="btn btn-outline compact-btn" type="button">ODŚWIEŻ LISTĘ</button></div><div class="table-tools"><input id="userSearch" type="search" placeholder="Szukaj po e-mailu lub nicku..." aria-label="Szukaj użytkowników"><span id="usersResultCount">—</span></div><div class="table-scroll"><table class="users-table"><thead><tr><th>UŻYTKOWNIK</th><th>NICK MINECRAFT</th><th>ROLA</th><th>REJESTRACJA</th><th>AKCJE</th></tr></thead><tbody id="usersTableBody"><tr><td colspan="5">Lista pojawi się po załadowaniu danych.</td></tr></tbody></table></div><p class="subtle-note">Zmiana roli jest dostępna wyłącznie po uruchomieniu funkcji SQL z pliku <code>PORTAL-MIGRATION.sql</code>. Nie usuwaj ani nie zmieniaj własnej roli przypadkowo.</p></article>
+          <div class="admin-tool-grid"><article class="integration-card"><span class="admin-icon">▥</span><h3>Plan Analytics</h3><p>Endpoint proxy do statystyk graczy i serwera.</p><span class="status-pill status-pending">BRAK POŁĄCZENIA</span></article><article class="integration-card"><span class="admin-icon">⌘</span><h3>Stan sieci</h3><p>Lobby, Earth, liczba graczy, TPS i uptime.</p><span class="status-pill status-pending">BRAK ENDPOINTU</span></article><article class="integration-card"><span class="admin-icon">◈</span><h3>Ekonomia i kary</h3><p>Saldo, transakcje, bany i wyciszenia po kontrolowanym API.</p><span class="status-pill status-pending">BRAK ENDPOINTU</span></article><article class="integration-card"><span class="admin-icon">⚙</span><h3>Audyt i konfiguracja</h3><p>Bezpieczny dziennik operacji administratorów i ustawienia portalu.</p><span class="status-pill status-pending">DO WDROŻENIA</span></article></div>
+          <div id="adminMessage" class="notice" role="status" aria-live="polite"></div>
+        </section>
+        <div class="account-actions"><button id="signOut" class="btn btn-primary" type="button">WYLOGUJ SIĘ <span>↗</span></button><a class="btn btn-outline" href="./index.html">WRÓĆ NA STRONĘ</a></div>
       </div>
       <div class="account-footer"><span>© 2026 BADPLAY</span><span>SECURE ACCOUNT PORTAL</span></div>
     </section>
   </main>
-  <script type="module" src="./konto.js?v=2"></script>
-</body>
-</html>
+  <script type="module" src="./konto.js?v=3"></script>
+</body></html>

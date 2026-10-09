@@ -1,155 +1,27 @@
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase-config.js?v=2';
-
 const $ = (id) => document.getElementById(id);
-const setupNotice = $('setupNotice');
-const authView = $('authView');
-const userView = $('userView');
-const authForm = $('authForm');
-const authMessage = $('authMessage');
-const profileMessage = $('profileMessage');
-const loginTab = $('loginTab');
-const registerTab = $('registerTab');
-const usernameField = $('usernameField');
-const submitButton = $('submitButton');
-const resetPassword = $('resetPassword');
-let mode = 'login';
-let supabase = null;
-let currentUser = null;
-
-function message(el, text, type = '') {
-  el.textContent = text;
-  el.className = 'notice show' + (type ? ` notice-${type}` : '');
-}
-function clearMessage(el) { el.textContent = ''; el.className = 'notice'; }
-function setMode(next) {
-  mode = next;
-  const isRegister = mode === 'register';
-  loginTab.classList.toggle('active', !isRegister);
-  registerTab.classList.toggle('active', isRegister);
-  loginTab.setAttribute('aria-selected', String(!isRegister));
-  registerTab.setAttribute('aria-selected', String(isRegister));
-  usernameField.classList.toggle('field-hidden', !isRegister);
-  $('password').autocomplete = isRegister ? 'new-password' : 'current-password';
-  submitButton.innerHTML = isRegister ? 'UTWÓRZ KONTO <span>→</span>' : 'ZALOGUJ SIĘ <span>→</span>';
-  $('accountTitle').innerHTML = isRegister ? 'Dołącz do <em>BADPLAY.</em>' : 'Witaj w <em>BADPLAY.</em>';
-  clearMessage(authMessage);
-}
-function friendlyError(error) {
-  const text = String(error?.message || 'Wystąpił nieoczekiwany błąd.');
-  if (/Invalid login credentials/i.test(text)) return 'Nieprawidłowy e-mail lub hasło.';
-  if (/User already registered/i.test(text)) return 'Konto z tym adresem e-mail już istnieje. Zaloguj się.';
-  if (/Email not confirmed/i.test(text)) return 'Potwierdź adres e-mail, a następnie zaloguj się.';
-  if (/Password should be at least/i.test(text)) return 'Hasło jest za krótkie. Użyj co najmniej 8 znaków.';
-  return text;
-}
-function showAuth() {
-  authView.classList.remove('hidden');
-  userView.classList.add('hidden');
-  currentUser = null;
-}
-async function showUser(user) {
-  currentUser = user;
-  authView.classList.add('hidden');
-  userView.classList.remove('hidden');
-  clearMessage(profileMessage);
-  $('profileEmail').textContent = user.email || 'Konto BADPLAY';
-  $('profileAvatar').textContent = (user.email || 'B').slice(0,1).toUpperCase();
-  $('profileName').textContent = (user.user_metadata?.minecraft_name || user.email?.split('@')[0] || 'graczu') + '.';
-  $('editMinecraftName').value = user.user_metadata?.minecraft_name || '';
-
-  // Rola pochodzi z tabeli chronionej przez RLS, nie z danych przekazanych przez przeglądarkę.
-  const { data: profile, error } = await supabase.from('profiles')
-    .select('id, email, minecraft_username, role')
-    .eq('id', user.id).maybeSingle();
-  if (error) {
-    message(profileMessage, 'Konto działa, ale nie udało się pobrać profilu. Sprawdź konfigurację SQL/RLS w AUTH-SETUP.md.', 'error');
-    return;
-  }
-  const role = profile?.role === 'admin' ? 'admin' : 'user';
-  $('profileRole').textContent = role === 'admin' ? 'ADMINISTRATOR' : 'UŻYTKOWNIK';
-  $('profileRole').classList.toggle('admin', role === 'admin');
-  $('profileMinecraft').textContent = profile?.minecraft_username ? `Nick Minecraft: ${profile.minecraft_username}` : 'Nick Minecraft: niepowiązany';
-  $('editMinecraftName').value = profile?.minecraft_username || '';
-  $('profileName').textContent = (profile?.minecraft_username || user.email?.split('@')[0] || 'graczu') + '.';
-  $('adminPanel').classList.toggle('hidden', role !== 'admin');
-}
-async function refreshSession() {
-  const { data: { session } } = await supabase.auth.getSession();
-  if (session?.user) await showUser(session.user); else showAuth();
-}
-
-loginTab.addEventListener('click', () => setMode('login'));
-registerTab.addEventListener('click', () => setMode('register'));
-authForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  clearMessage(authMessage);
-  const email = $('email').value.trim();
-  const password = $('password').value;
-  submitButton.disabled = true;
-  try {
-    if (mode === 'register') {
-      const minecraftName = $('minecraftName').value.trim();
-      const options = { data: { minecraft_name: minecraftName || null } };
-      const { data, error } = await supabase.auth.signUp({ email, password, options: { data: options.data, emailRedirectTo: `${location.origin}${location.pathname}` } });
-      if (error) throw error;
-      if (data.session) {
-        await showUser(data.user);
-        message(profileMessage, 'Konto utworzone. Witaj w BADPLAY!', 'success');
-      } else {
-        message(authMessage, 'Konto utworzone. Sprawdź skrzynkę e-mail i potwierdź adres przed pierwszym logowaniem.', 'success');
-        authForm.reset();
-        setMode('login');
-      }
-    } else {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-      await showUser(data.user);
-    }
-  } catch (error) {
-    message(authMessage, friendlyError(error), 'error');
-  } finally {
-    submitButton.disabled = false;
-  }
-});
-resetPassword.addEventListener('click', async () => {
-  const email = $('email').value.trim();
-  if (!email) { message(authMessage, 'Najpierw wpisz swój adres e-mail.', 'error'); return; }
-  try {
-    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${location.origin}${location.pathname}` });
-    if (error) throw error;
-    message(authMessage, 'Jeśli konto istnieje, wysłaliśmy instrukcję resetowania hasła.', 'success');
-  } catch (error) { message(authMessage, friendlyError(error), 'error'); }
-});
-$('signOut').addEventListener('click', async () => {
-  const { error } = await supabase.auth.signOut();
-  if (error) { message(profileMessage, friendlyError(error), 'error'); return; }
-  showAuth(); setMode('login'); message(authMessage, 'Wylogowano z konta BADPLAY.', 'success');
-});
-$('saveProfile').addEventListener('click', async () => {
-  if (!currentUser) return;
-  const username = $('editMinecraftName').value.trim();
-  if (username && !/^[A-Za-z0-9_]{3,16}$/.test(username)) {
-    message(profileMessage, 'Nick Minecraft musi mieć 3–16 znaków: litery, cyfry lub podkreślenie.', 'error'); return;
-  }
-  const { error } = await supabase.from('profiles').update({ minecraft_username: username || null }).eq('id', currentUser.id);
-  if (error) { message(profileMessage, 'Nie udało się zapisać profilu. Sprawdź, czy wykonano SQL z AUTH-SETUP.md.', 'error'); return; }
-  await showUser(currentUser);
-  message(profileMessage, 'Profil zapisany.', 'success');
-});
-
-const configured = SUPABASE_URL.startsWith('https://') && !SUPABASE_URL.includes('WKLEJ_') && SUPABASE_ANON_KEY.length > 20 && !SUPABASE_ANON_KEY.includes('WKLEJ_');
-if (!configured) {
-  setupNotice.classList.add('show');
-  authForm.querySelectorAll('input,button').forEach((el) => { el.disabled = true; });
-  resetPassword.disabled = true;
-} else {
-  setupNotice.classList.remove('show');
-  import('https://esm.sh/@supabase/supabase-js@2').then(({ createClient }) => {
-    supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
-    supabase.auth.onAuthStateChange((_event, session) => {
-      // Odsuń zapytania do profilu poza callback auth, aby uniknąć blokowania locka sesji.
-      setTimeout(() => { if (session?.user) showUser(session.user); else showAuth(); }, 0);
-    });
-    refreshSession();
-  }).catch(() => message(authMessage, 'Nie udało się załadować modułu logowania. Sprawdź połączenie z internetem.', 'error'));
-}
+const setupNotice=$('setupNotice'),authView=$('authView'),userView=$('userView'),authForm=$('authForm'),authMessage=$('authMessage'),profileMessage=$('profileMessage'),loginTab=$('loginTab'),registerTab=$('registerTab'),usernameField=$('usernameField'),submitButton=$('submitButton'),resetPassword=$('resetPassword');
+let mode='login',supabase=null,currentUser=null,currentProfile=null,allAdminProfiles=[];
+const fmtDate=(v)=>v?new Intl.DateTimeFormat('pl-PL',{year:'numeric',month:'short',day:'numeric'}).format(new Date(v)):'—';
+const daysSince=(v)=>v?Math.max(0,Math.floor((Date.now()-new Date(v).getTime())/86400000)):0;
+function message(el,text,type=''){el.textContent=text;el.className='notice show'+(type?' notice-'+type:'');}
+function clearMessage(el){if(el){el.textContent='';el.className='notice';}}
+function setMode(next){mode=next;const reg=mode==='register';loginTab.classList.toggle('active',!reg);registerTab.classList.toggle('active',reg);loginTab.setAttribute('aria-selected',String(!reg));registerTab.setAttribute('aria-selected',String(reg));usernameField.classList.toggle('field-hidden',!reg);$('password').autocomplete=reg?'new-password':'current-password';submitButton.innerHTML=reg?'UTWÓRZ KONTO <span>→</span>':'ZALOGUJ SIĘ <span>→</span>';$('accountTitle').innerHTML=reg?'Dołącz do <em>BADPLAY.</em>':'Witaj w <em>BADPLAY.</em>';clearMessage(authMessage);}
+function friendlyError(error){const t=String(error?.message||'Wystąpił nieoczekiwany błąd.');if(/Invalid login credentials/i.test(t))return'Nieprawidłowy e-mail lub hasło.';if(/User already registered/i.test(t))return'Konto z tym adresem e-mail już istnieje. Zaloguj się.';if(/Email not confirmed/i.test(t))return'Potwierdź adres e-mail, a następnie zaloguj się.';if(/Password should be at least/i.test(t))return'Hasło jest za krótkie. Użyj co najmniej 8 znaków.';if(/permission denied|row-level security/i.test(t))return'Brak uprawnień do tej operacji. Sprawdź zasady RLS w Supabase.';return t;}
+function showAuth(){authView.classList.remove('hidden');userView.classList.add('hidden');currentUser=null;currentProfile=null;}
+function setMetric(id,value){const el=$(id);if(el)el.textContent=value;}
+function drawRegistrationChart(profiles){const canvas=$('registrationChart');if(!canvas)return;const rect=canvas.getBoundingClientRect();const dpr=window.devicePixelRatio||1;const w=Math.max(280,rect.width||560),h=190;canvas.width=w*dpr;canvas.height=h*dpr;canvas.style.height=h+'px';const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);const labels=[],counts=[];for(let i=13;i>=0;i--){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-i);labels.push(d);counts.push(profiles.filter(p=>p.created_at&&new Date(p.created_at).toDateString()===d.toDateString()).length);}const pad={l:26,r:10,t:16,b:27},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b,max=Math.max(3,...counts);ctx.font='10px Arial';ctx.strokeStyle='#2c2c32';ctx.fillStyle='#888890';ctx.lineWidth=1;for(let i=0;i<4;i++){const y=pad.t+ch*i/3;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillText(String(Math.ceil(max*(1-i/3))),3,y+3);}const step=cw/counts.length,bw=Math.max(4,step*.48);counts.forEach((v,i)=>{const bh=(v/max)*ch,x=pad.l+i*step+(step-bw)/2,y=pad.t+ch-bh;const grad=ctx.createLinearGradient(0,y,0,pad.t+ch);grad.addColorStop(0,'#ff394b');grad.addColorStop(1,'rgba(255,38,56,.22)');ctx.fillStyle=grad;ctx.fillRect(x,y,bw,Math.max(v?3:0,bh));if(i%2===0||i===13){ctx.fillStyle='#85858c';ctx.fillText(labels[i].toLocaleDateString('pl-PL',{day:'2-digit',month:'2-digit'}),x-7,h-8);}});setMetric('chartTotal',counts.reduce((a,b)=>a+b,0));}
+function renderAdminUsers(profiles){const body=$('usersTableBody');if(!body)return;const q=($('userSearch')?.value||'').trim().toLowerCase();const filtered=profiles.filter(p=>[p.email,p.minecraft_username,p.role].some(v=>String(v||'').toLowerCase().includes(q)));setMetric('usersResultCount',`${filtered.length} / ${profiles.length}`);if(!filtered.length){body.innerHTML='<tr><td colspan="5">Brak użytkowników pasujących do wyszukiwania.</td></tr>';return;}body.innerHTML=filtered.map(p=>`<tr><td><strong>${escapeHtml(p.email||'—')}</strong><small>${escapeHtml(String(p.id||'').slice(0,8))}…</small></td><td>${escapeHtml(p.minecraft_username||'—')}</td><td><span class="table-role ${p.role==='admin'?'is-admin':''}">${p.role==='admin'?'ADMIN':'UŻYTKOWNIK'}</span></td><td>${fmtDate(p.created_at)}</td><td><button class="btn btn-outline compact-btn role-action" data-user-id="${escapeHtml(p.id)}" data-role="${p.role==='admin'?'user':'admin'}" ${p.id===currentUser?.id?'disabled title="Nie zmieniaj własnej roli z tego widoku"':''}>${p.role==='admin'?'ZDEJMIJ ADMINA':'NADAJ ADMINA'}</button></td></tr>`).join('');body.querySelectorAll('.role-action').forEach(btn=>btn.addEventListener('click',()=>changeRole(btn.dataset.userId,btn.dataset.role)));}
+function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+async function loadAdminData(){clearMessage($('adminMessage'));const {data,error}=await supabase.from('profiles').select('id,email,minecraft_username,role,created_at').order('created_at',{ascending:false}).limit(1000);if(error){message($('adminMessage'),'Nie udało się pobrać listy kont. Sprawdź politykę RLS i uprawnienia administratora. '+friendlyError(error),'error');return;}allAdminProfiles=data||[];const total=allAdminProfiles.length,admins=allAdminProfiles.filter(p=>p.role==='admin').length,cutoff=Date.now()-30*86400000,newUsers=allAdminProfiles.filter(p=>p.created_at&&new Date(p.created_at).getTime()>=cutoff).length;setMetric('adminTotalUsers',total);setMetric('adminCount',admins);setMetric('adminNewUsers',newUsers);setMetric('roleUserCount',total-admins);setMetric('roleUserLegend',total-admins);setMetric('roleAdminLegend',admins);const donut=$('roleDonut');if(donut)donut.style.setProperty('--admin-share',`${total?admins/total*100:0}%`);drawRegistrationChart(allAdminProfiles);renderAdminUsers(allAdminProfiles);}
+async function changeRole(userId,nextRole){if(!currentProfile||currentProfile.role!=='admin')return;if(!confirm(`Na pewno ${nextRole==='admin'?'nadać rolę administratora':'odebrać rolę administratora'} temu kontu?`))return;const {error}=await supabase.rpc('admin_set_profile_role',{target_user_id:userId,new_role:nextRole});if(error){message($('adminMessage'),'Nie udało się zmienić roli. Uruchom PORTAL-MIGRATION.sql w Supabase i sprawdź komunikat: '+friendlyError(error),'error');return;}message($('adminMessage'),'Rola użytkownika została zmieniona.','success');await loadAdminData();}
+async function showUser(user){currentUser=user;authView.classList.add('hidden');userView.classList.remove('hidden');clearMessage(profileMessage);setMetric('profileEmail',user.email||'Konto BADPLAY');setMetric('profileAvatar',(user.email||'B').slice(0,1).toUpperCase());const {data:profile,error}=await supabase.from('profiles').select('id,email,minecraft_username,role,created_at,updated_at').eq('id',user.id).maybeSingle();if(error){message(profileMessage,'Konto działa, ale nie udało się pobrać profilu. Sprawdź konfigurację SQL/RLS.','error');return;}currentProfile=profile;const role=profile?.role==='admin'?'admin':'user';setMetric('profileRole',role==='admin'?'ADMINISTRATOR':'UŻYTKOWNIK');$('profileRole').classList.toggle('admin',role==='admin');setMetric('profileMinecraft',profile?.minecraft_username?`Nick Minecraft: ${profile.minecraft_username}`:'Nick Minecraft: niepowiązany');setMetric('editMinecraftName',profile?.minecraft_username||'');$('editMinecraftName').value=profile?.minecraft_username||'';setMetric('profileName',(profile?.minecraft_username||user.email?.split('@')[0]||'graczu')+'.');setMetric('accountCreated',`Dołączono: ${fmtDate(profile?.created_at||user.created_at)}`);$('adminPanel').classList.toggle('hidden',role!=='admin');const age=daysSince(profile?.created_at||user.created_at);setMetric('membershipDays',age);setMetric('minecraftStatus',profile?.minecraft_username?'WPISANY':'NIE');setMetric('membershipRole',role==='admin'?'ADMIN':'GRACZ');const completion=(user.email?35:0)+(profile?.minecraft_username?35:0)+(profile?.created_at?30:0);setMetric('profileCompletion',`${completion}%`);setMetric('profileCompletionHint',completion===100?'Podstawowy profil kompletny':'Uzupełnij nick Minecraft');const bar=$('profileCompletionBar');if(bar)bar.style.width=`${completion}%`;const events=$('accountEvents');if(events)events.innerHTML=`<div class="event-row"><span class="event-dot"></span><div><strong>Sesja portalu aktywna</strong><small>Zalogowano jako ${escapeHtml(user.email||'użytkownik')}</small></div><time>TERAZ</time></div><div class="event-row"><span class="event-dot ${profile?.minecraft_username?'':'muted'}"></span><div><strong>${profile?.minecraft_username?'Nick Minecraft zapisany':'Integracja Minecraft'}</strong><small>${profile?.minecraft_username?'Nick zapisany w profilu; własność nie została zweryfikowana':'Oczekuje na połączenie i weryfikację w grze'}</small></div><time>${profile?.minecraft_username?'PROFIL':'—'}</time></div><div class="event-row"><span class="event-dot muted"></span><div><strong>Plan Analytics</strong><small>Brak bezpiecznego endpointu — statystyki nie są jeszcze dostępne</small></div><time>OCZEKUJE</time></div>`;if(role==='admin')await loadAdminData();}
+async function refreshSession(){const {data:{session}}=await supabase.auth.getSession();if(session?.user)await showUser(session.user);else showAuth();}
+loginTab.addEventListener('click',()=>setMode('login'));registerTab.addEventListener('click',()=>setMode('register'));
+authForm.addEventListener('submit',async event=>{event.preventDefault();clearMessage(authMessage);const email=$('email').value.trim(),password=$('password').value;submitButton.disabled=true;try{if(mode==='register'){const minecraftName=$('minecraftName').value.trim();const {data,error}=await supabase.auth.signUp({email,password,options:{data:{minecraft_name:minecraftName||null},emailRedirectTo:`${location.origin}${location.pathname}`}});if(error)throw error;if(data.session){await showUser(data.user);message(profileMessage,'Konto utworzone. Witaj w BADPLAY!','success');}else{message(authMessage,'Konto utworzone. Sprawdź skrzynkę e-mail i potwierdź adres przed pierwszym logowaniem.','success');authForm.reset();setMode('login');}}else{const {data,error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;await showUser(data.user);}}catch(error){message(authMessage,friendlyError(error),'error');}finally{submitButton.disabled=false;}});
+resetPassword.addEventListener('click',async()=>{const email=$('email').value.trim();if(!email){message(authMessage,'Najpierw wpisz swój adres e-mail.','error');return;}try{const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:`${location.origin}${location.pathname}`});if(error)throw error;message(authMessage,'Jeśli konto istnieje, wysłaliśmy instrukcję resetowania hasła.','success');}catch(error){message(authMessage,friendlyError(error),'error');}});
+$('signOut').addEventListener('click',async()=>{const {error}=await supabase.auth.signOut();if(error){message(profileMessage,friendlyError(error),'error');return;}showAuth();setMode('login');message(authMessage,'Wylogowano z konta BADPLAY.','success');});
+$('saveProfile').addEventListener('click',async()=>{if(!currentUser)return;const username=$('editMinecraftName').value.trim();if(username&&!/^[A-Za-z0-9_]{3,16}$/.test(username)){message(profileMessage,'Nick Minecraft musi mieć 3–16 znaków: litery, cyfry lub podkreślenie.','error');return;}const {error}=await supabase.from('profiles').update({minecraft_username:username||null,updated_at:new Date().toISOString()}).eq('id',currentUser.id);if(error){message(profileMessage,'Nie udało się zapisać profilu. Sprawdź SQL/RLS. '+friendlyError(error),'error');return;}await showUser(currentUser);message(profileMessage,'Profil zapisany.','success');});
+$('refreshDashboard').addEventListener('click',refreshSession);$('reloadUsers').addEventListener('click',loadAdminData);$('userSearch').addEventListener('input',()=>renderAdminUsers(allAdminProfiles));window.addEventListener('resize',()=>{if(currentProfile?.role==='admin')drawRegistrationChart(allAdminProfiles);});
+const configured=SUPABASE_URL.startsWith('https://')&&!SUPABASE_URL.includes('WKLEJ_')&&SUPABASE_ANON_KEY.length>20&&!SUPABASE_ANON_KEY.includes('WKLEJ_');
+if(!configured){setupNotice.classList.add('show');authForm.querySelectorAll('input,button').forEach(el=>el.disabled=true);resetPassword.disabled=true;}else{setupNotice.classList.remove('show');import('https://esm.sh/@supabase/supabase-js@2').then(({createClient})=>{supabase=createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});supabase.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>{if(session?.user)showUser(session.user);else showAuth();},0);});refreshSession();}).catch(()=>message(authMessage,'Nie udało się załadować modułu logowania. Sprawdź połączenie z internetem.','error'));}
