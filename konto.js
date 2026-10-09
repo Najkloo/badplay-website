@@ -1,4 +1,4 @@
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase-config.js';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase-config.js?v=2';
 
 const $ = (id) => document.getElementById(id);
 const setupNotice = $('setupNotice');
