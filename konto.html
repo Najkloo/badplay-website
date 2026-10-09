@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="Konto BADPLAY — logowanie, rejestracja i panel użytkownika.">
+  <title>Konto — BADPLAY</title>
+  <link rel="icon" type="image/png" href="./assets/logo.png">
+  <link rel="stylesheet" href="./style.css?v=7">
+  <link rel="stylesheet" href="./konto.css?v=1">
+</head>
+<body class="account-body">
+  <div class="noise" aria-hidden="true"></div>
+  <header class="header account-header">
+    <div class="wrap nav">
+      <a class="brand" href="./index.html" aria-label="BADPLAY — strona główna"><span class="brand-mark"><img src="./assets/logo.png" alt=""></span><span>BAD<span>PLAY</span></span></a>
+      <div class="nav-actions"><a class="btn btn-outline" href="./index.html">← STRONA GŁÓWNA</a></div>
+    </div>
+  </header>
+  <main class="account-main">
+    <div class="account-glow" aria-hidden="true"></div>
+    <section class="account-shell" aria-labelledby="accountTitle">
+      <div class="account-brandline"><span class="account-mark">BP</span><span>BADPLAY <i>PORTAL</i></span></div>
+      <div id="setupNotice" class="notice notice-warning" role="status">System kont wymaga konfiguracji Supabase. Uzupełnij <code>supabase-config.js</code> i wykonaj instrukcje z pliku <code>AUTH-SETUP.md</code>.</div>
+      <div id="authView">
+        <div class="account-heading"><span class="kicker"><span></span> TWOJE KONTO</span><h1 id="accountTitle">Witaj w <em>BADPLAY.</em></h1><p>Zaloguj się albo utwórz konto, aby przejść do swojego panelu.</p></div>
+        <div class="auth-tabs" role="tablist" aria-label="Wybierz formularz"><button class="auth-tab active" id="loginTab" type="button" role="tab" aria-selected="true">LOGOWANIE</button><button class="auth-tab" id="registerTab" type="button" role="tab" aria-selected="false">REJESTRACJA</button></div>
+        <form id="authForm" class="auth-form">
+          <label for="email">Adres e-mail</label><input id="email" name="email" type="email" autocomplete="email" placeholder="ty@przyklad.pl" required maxlength="254">
+          <div id="usernameField" class="field-hidden"><label for="minecraftName">Nick Minecraft <span>(opcjonalnie)</span></label><input id="minecraftName" name="minecraftName" type="text" autocomplete="off" placeholder="TwójNick" minlength="3" maxlength="16" pattern="[A-Za-z0-9_]{3,16}"></div>
+          <label for="password">Hasło</label><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Minimum 8 znaków" required minlength="8" maxlength="128">
+          <button class="btn btn-primary auth-submit" id="submitButton" type="submit">ZALOGUJ SIĘ <span>→</span></button>
+          <button class="text-button" id="resetPassword" type="button">Nie pamiętasz hasła?</button>
+        </form>
+        <div id="authMessage" class="notice" role="status" aria-live="polite"></div>
+        <p class="account-legal">Tworząc konto, korzystasz z systemu kont BADPLAY. Nigdy nie podawaj hasła do Minecrafta.</p>
+      </div>
+      <div id="userView" class="hidden" aria-live="polite">
+        <div class="account-heading"><span class="kicker"><span></span> PANEL UŻYTKOWNIKA</span><h1>Witaj, <em id="profileName">graczu.</em></h1><p>To Twoje konto BADPLAY. Dodatkowe funkcje są widoczne zgodnie z przypisanymi uprawnieniami.</p></div>
+        <div class="profile-card"><div class="profile-avatar" id="profileAvatar">B</div><div class="profile-info"><strong id="profileEmail">—</strong><span id="profileRole" class="role-pill">UŻYTKOWNIK</span><span id="profileMinecraft">Nick Minecraft: niepowiązany</span></div></div>
+        <div class="profile-edit"><label for="editMinecraftName">Nick Minecraft</label><input id="editMinecraftName" type="text" maxlength="16" minlength="3" pattern="[A-Za-z0-9_]{3,16}" placeholder="TwójNick"><button id="saveProfile" class="btn btn-outline" type="button">ZAPISZ PROFIL</button></div>
+        <section id="adminPanel" class="admin-panel hidden"><div class="admin-panel-heading"><span class="kicker"><span></span> STREFA CHRONIONA</span><h2>Panel <em>administratora.</em></h2></div><p>Twoje konto ma przypisaną rolę administratora. To miejsce na zarządzanie użytkownikami, statystyki Plan i narzędzia administracyjne — kolejne moduły podłączymy do bezpiecznych endpointów.</p><div class="admin-grid"><div><span class="admin-icon">◎</span><strong>Użytkownicy</strong><small>Lista kont i przypisane role</small></div><div><span class="admin-icon">▥</span><strong>Statystyki serwera</strong><small>Integracja z Plan Analytics</small></div><div><span class="admin-icon">⌘</span><strong>Administracja</strong><small>Moduły i ustawienia portalu</small></div></div><div class="notice notice-warning show">Panel administratora jest szkieletem interfejsu. Nie pokazuje jeszcze danych Plan ani nie wykonuje operacji administracyjnych.</div></section>
+        <div class="account-actions"><button id="signOut" class="btn btn-primary" type="button">WYLOGUJ SIĘ <span>↗</span></button><a class="btn btn-outline" href="./index.html">WRÓĆ NA STRONĘ</a></div>
+        <div id="profileMessage" class="notice" role="status" aria-live="polite"></div>
+      </div>
+      <div class="account-footer"><span>© 2026 BADPLAY</span><span>SECURE ACCOUNT PORTAL</span></div>
+    </section>
+  </main>
+  <script type="module" src="./konto.js?v=1"></script>
+</body>
+</html>

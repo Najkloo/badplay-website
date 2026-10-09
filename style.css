@@ -159,3 +159,8 @@ footer{position:relative;z-index:2;border-top:1px solid #222;background:#050505}
 .skin3d-modal-view canvas{display:block!important;width:100%!important;height:100%!important}
 @media(max-width:900px){.staff-v5-info h3{font-size:20px!important}.skin3d-modal-copy h3{font-size:clamp(32px,7vw,46px)!important}}
 @media(max-width:600px){.staff-v5-info h3{font-size:21px!important}.staff-v5-role{font-size:8px!important}.skin3d-modal-copy h3{font-size:34px!important}}
+
+
+/* Account entry */
+.btn-account{background:#151517;border-color:#39393e;color:#fff}.btn-account:hover{border-color:var(--red2);box-shadow:0 8px 25px rgba(229,9,26,.14)}
+@media(max-width:900px){.nav-actions .btn-account{display:inline-flex}.nav-actions{gap:6px}.nav-actions .btn{padding:0 11px;font-size:10px}}
